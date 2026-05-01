@@ -1,0 +1,15 @@
+{
+  "name": "comma-car-finder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:data": "node scripts/build-vehicles-data.mjs /tmp/comma-vehicles.html",
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vite": "^7.0.0"
+  },
+  "devDependencies": {}
+}
