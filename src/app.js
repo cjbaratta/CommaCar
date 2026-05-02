@@ -32,6 +32,7 @@ const state = {
   accFilters: [],
   supportFilters: [],
   evOnly: false,
+  openFilterPanels: [],
   listingText: sampleListings.join("\n"),
   onlyRecommended: false,
 };
@@ -395,6 +396,30 @@ function checkboxGroup(title, group, options) {
   `;
 }
 
+function multiSelectControl(title, group, options) {
+  const label = state[group].length ? `${state[group].length} selected` : "Any";
+  return `
+    <details class="multi-select" data-filter-panel="${group}" ${state.openFilterPanels.includes(group) ? "open" : ""}>
+      <summary>
+        <span>${title}</span>
+        <strong>${label}</strong>
+      </summary>
+      <div class="check-grid">
+        ${options
+          .map(
+            (option) => `
+              <label class="check-pill">
+                <input data-filter-group="${group}" type="checkbox" value="${option}" ${state[group].includes(option) ? "checked" : ""} />
+                ${option}
+              </label>
+            `,
+          )
+          .join("")}
+      </div>
+    </details>
+  `;
+}
+
 function searchTargetCard(vehicle) {
   return `
     <article class="target-card">
@@ -469,8 +494,8 @@ function render() {
         <label>Max price<input data-bind="maxPrice" value="${state.maxPrice}" inputmode="numeric" placeholder="25000" /></label>
         <label>Body style<select data-bind="bodyStyle">${bodyStyleOptions()}</select></label>
         <label class="toggle ev-toggle"><input data-bind="evOnly" type="checkbox" ${state.evOnly ? "checked" : ""} /> EV only</label>
-        ${checkboxGroup("ALC", "alcFilters", alcFilterOptions)}
-        ${checkboxGroup("ACC", "accFilters", accFilterOptions)}
+        ${multiSelectControl("ALC", "alcFilters", alcFilterOptions)}
+        ${multiSelectControl("ACC", "accFilters", accFilterOptions)}
         ${checkboxGroup("Support notes", "supportFilters", supportFilterOptions)}
       </div>
     </section>
@@ -563,8 +588,18 @@ function render() {
     element.addEventListener("change", (event) => {
       const group = event.target.dataset.filterGroup;
       const value = event.target.value;
+      if (!state.openFilterPanels.includes(group)) state.openFilterPanels = [...state.openFilterPanels, group];
       state[group] = event.target.checked ? [...state[group], value] : state[group].filter((item) => item !== value);
       render();
+    });
+  });
+
+  app.querySelectorAll("[data-filter-panel]").forEach((element) => {
+    element.addEventListener("toggle", (event) => {
+      const group = event.currentTarget.dataset.filterPanel;
+      state.openFilterPanels = event.currentTarget.open
+        ? [...new Set([...state.openFilterPanels, group])]
+        : state.openFilterPanels.filter((item) => item !== group);
     });
   });
 

@@ -94,6 +94,7 @@ textarea {
 .control-panel label:nth-child(3),
 .control-panel label:nth-child(6),
 .control-panel .filter-group,
+.control-panel .multi-select,
 .ev-toggle {
   grid-column: 1 / -1;
 }
@@ -331,6 +332,38 @@ textarea {
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 6px;
   padding: 11px;
+}
+
+.multi-select {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.multi-select summary {
+  min-height: 42px;
+  padding: 10px 12px;
+}
+
+.multi-select summary span {
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.multi-select summary strong {
+  color: var(--accent-strong);
+  font-size: 0.82rem;
+}
+
+.multi-select .check-grid {
+  padding: 0 10px 10px;
+}
+
+.multi-select .check-pill {
+  border-color: var(--line);
+  background: var(--soft);
+  color: var(--ink);
 }
 
 .filter-group legend {
@@ -590,6 +623,7 @@ dd {
   .control-panel label:nth-child(3),
   .control-panel label:nth-child(6),
   .control-panel .filter-group,
+  .control-panel .multi-select,
   .ev-toggle {
     grid-column: auto;
   }
