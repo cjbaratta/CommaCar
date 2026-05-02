@@ -1,4 +1,4 @@
-# Comma Car Finder
+# PilotCompatible
 
 A lightweight static Vite app for finding US-market vehicles with comma.ai openpilot compatibility and jumping into pre-built marketplace searches.
 
