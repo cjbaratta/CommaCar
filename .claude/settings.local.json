@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/lint.mjs)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://127.0.0.1:5173)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(git pull *)",
+      "Bash(gh repo *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:5173)",
+      "mcp__Claude_in_Chrome__browser_batch",
+      "Bash(pkill -f \"vite --host\")"
+    ]
+  }
+}
