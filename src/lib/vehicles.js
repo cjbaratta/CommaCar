@@ -188,6 +188,12 @@ function isBatteryElectric(vehicle) {
   return electricTokens.some((token) => model.includes(normalize(token)));
 }
 
+function isHybrid(vehicle) {
+  if (vehicle.isElectric) return false;
+  const model = normalize(vehicle.marketplaceModel);
+  return model.includes("hybrid") || model.includes("prius");
+}
+
 function isUsMarket(vehicle) {
   const marketText = normalize(`${vehicle.model} ${vehicle.requirement} ${vehicle.note}`);
   return !nonUsPatterns.some((pattern) => marketText.includes(normalize(pattern)));
@@ -203,6 +209,7 @@ export function enrichVehicle(vehicle) {
     canonicalName,
     features,
     isElectric: false,
+    isHybrid: false,
     isFavorite: favoriteNames.has(canonicalName),
     isUsMarket: false,
     marketplaceModel,
@@ -214,6 +221,7 @@ export const vehicles = commaVehicles.map((vehicle) => {
   const enriched = enrichVehicle(vehicle);
   enriched.bodyStyle = classifyBodyStyle(enriched);
   enriched.isElectric = isBatteryElectric(enriched);
+  enriched.isHybrid = isHybrid(enriched);
   enriched.isUsMarket = isUsMarket(enriched);
   return enriched;
 });
@@ -230,6 +238,7 @@ export function filterVehicles(state, sourceVehicles = usVehicles) {
     .filter((vehicle) => !state.minYear || (Number.isFinite(minYear) && vehicle.years.some((year) => year >= minYear)))
     .filter((vehicle) => state.bodyStyle === "Any" || vehicle.bodyStyle === state.bodyStyle)
     .filter((vehicle) => !state.evOnly || vehicle.isElectric)
+    .filter((vehicle) => !state.hybridOnly || vehicle.isHybrid)
     .filter((vehicle) => matchesCapabilities(vehicle, state))
     .filter((vehicle) => !needle || normalize(vehicle.searchIndex).includes(needle));
 }

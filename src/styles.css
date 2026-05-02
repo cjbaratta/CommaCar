@@ -42,6 +42,23 @@ textarea {
   margin: 0 auto;
 }
 
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 100;
+  padding: 8px 16px;
+  border-radius: 0 0 6px 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 .hero {
   position: relative;
   overflow: hidden;
@@ -351,6 +368,10 @@ textarea {
   font-size: 0.84rem;
 }
 
+.miss-label {
+  color: #92400e;
+}
+
 .results {
   padding: 28px 0 0;
 }
@@ -377,8 +398,11 @@ textarea {
 
 .toggle-row {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .toggle input {
@@ -644,6 +668,11 @@ details .listing-results {
 .ev-badge {
   background: var(--sky);
   color: #1e3a8a;
+}
+
+.hybrid-badge {
+  background: #d1fae5;
+  color: #065f46;
 }
 
 .year-strip {

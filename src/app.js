@@ -32,6 +32,7 @@ const state = {
   accFilters: [],
   supportFilters: [],
   evOnly: false,
+  hybridOnly: false,
   openFilterPanels: [],
   listingText: sampleListings.join("\n"),
   onlyRecommended: false,
@@ -72,7 +73,7 @@ function multiSelectControl(title, group, options, helpText) {
     <details class="multi-select" data-filter-panel="${h(group)}" ${state.openFilterPanels.includes(group) ? "open" : ""}>
       <summary aria-describedby="${group}-help">
         <span>${h(title)}</span>
-        <strong data-filter-count="${h(group)}">${h(label)}</strong>
+        <strong data-filter-count="${h(group)}" aria-live="polite">${h(label)}</strong>
       </summary>
       <p id="${group}-help" class="field-help">${h(helpText)}</p>
       <div class="check-grid">
@@ -116,6 +117,7 @@ function hasActiveFilters() {
     state.accFilters.length > 0 ||
     state.supportFilters.length > 0 ||
     state.evOnly ||
+    state.hybridOnly ||
     state.onlyRecommended
   );
 }
@@ -131,6 +133,7 @@ function clearFilters() {
     accFilters: [],
     supportFilters: [],
     evOnly: false,
+    hybridOnly: false,
     onlyRecommended: false,
     openFilterPanels: [],
   });
@@ -166,13 +169,14 @@ function featureChips(vehicle) {
 function marketBadges(vehicle) {
   return `
     ${vehicle.isElectric ? '<span class="badge ev-badge">EV</span>' : ""}
+    ${vehicle.isHybrid ? '<span class="badge hybrid-badge">Hybrid</span>' : ""}
     ${vehicle.isFavorite ? '<span class="badge">Comma pick</span>' : ""}
   `;
 }
 
 function vehicleCard(vehicle, safeState) {
   return `
-    <article class="vehicle-card">
+    <article class="vehicle-card" aria-label="${h(vehicle.make)} ${h(vehicle.model)}">
       <div class="card-head">
         <div>
           <span class="eyebrow">${h(vehicle.make)}</span>
@@ -210,14 +214,15 @@ function filterSummary(count, safeState) {
   if (safeState.accFilters.length) pieces.push(`ACC: ${safeState.accFilters.join(", ")}`);
   if (safeState.supportFilters.length) pieces.push(safeState.supportFilters.join(", "));
   if (safeState.evOnly) pieces.push("EV");
+  if (safeState.hybridOnly) pieces.push("Hybrid / PHEV");
   if (safeState.onlyRecommended) pieces.push("Comma favorites");
-  const scope = pieces.length ? pieces.join(" + ") : "all US-market supported vehicles";
+  const scope = pieces.length ? pieces.join(" · ") : "all US-market supported vehicles";
   return `Showing ${count} compatibility ${count === 1 ? "row" : "rows"} for ${scope}.`;
 }
 
 function searchTargetCard(vehicle, safeState) {
   return `
-    <article class="target-card">
+    <article class="target-card" aria-label="${h(vehicle.make)} ${h(vehicle.model)}">
       <div class="target-card-head">
         <div>
           <span class="eyebrow">${h(vehicle.make)}</span>
@@ -242,9 +247,9 @@ function searchTargetCard(vehicle, safeState) {
 function analysisRow(result) {
   if (!result.matches.length) {
     return `
-      <article class="listing-row miss">
+      <article class="listing-row miss" aria-label="No match: ${h(result.line)}">
         <p>${h(result.line)}</p>
-        <strong>No explicit Comma match found</strong>
+        <strong class="miss-label">✗ No match found</strong>
         <span>Try adding the model year, trim, or package text from the seller listing.</span>
       </article>
     `;
@@ -252,13 +257,13 @@ function analysisRow(result) {
 
   const best = result.matches[0].vehicle;
   return `
-    <article class="listing-row hit">
+    <article class="listing-row hit" aria-label="Match found: ${h(result.line)}">
       <p>${h(result.line)}</p>
       <strong>${h(best.make)} ${h(best.model)} ${h(best.yearsLabel)}</strong>
       <span>${h(best.requirement)}</span>
       <div class="link-group">
         ${reviewLinks(best).slice(0, 2).map(sourceButton).join("")}
-        <a class="pill-link" href="${h(best.shopUrl)}" target="_blank" rel="noreferrer">Harness</a>
+        ${sourceButton(["Harness", best.shopUrl])}
       </div>
     </article>
   `;
@@ -266,6 +271,7 @@ function analysisRow(result) {
 
 function renderShell() {
   app.innerHTML = `
+    <a href="#vehicle-grid" class="skip-link">Skip to results</a>
     <section class="hero">
       <div class="hero-copy">
         <span class="eyebrow">Comma Car Finder</span>
@@ -274,24 +280,26 @@ function renderShell() {
       </div>
       <div class="control-panel" aria-label="Search filters">
         <label class="search main-search">Model, trim, or capability<input data-bind="query" value="${h(state.query)}" placeholder="Corolla, EV6, stop & go, 2021..." /></label>
-        <label>ZIP code<input data-bind="zip" value="${h(state.zip)}" inputmode="numeric" maxlength="5" aria-describedby="zip-help" /></label>
-        <label>Radius<input data-bind="radius" value="${h(state.radius)}" inputmode="numeric" aria-describedby="radius-help" /></label>
+        <label>ZIP code<input data-bind="zip" value="${h(state.zip)}" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-describedby="zip-help" /></label>
+        <label>Radius<input data-bind="radius" value="${h(state.radius)}" inputmode="numeric" pattern="[0-9]*" aria-describedby="radius-help" /></label>
         <label>Make<select data-bind="make">${optionList(["All", ...makes], state.make)}</select></label>
         <label>Body style<select data-bind="bodyStyle">${optionList(bodyStyles, state.bodyStyle)}</select></label>
-        <label>Minimum year<input data-bind="minYear" value="${h(state.minYear)}" inputmode="numeric" placeholder="2020" aria-describedby="year-help" /></label>
-        <label>Max price<input data-bind="maxPrice" value="${h(state.maxPrice)}" inputmode="numeric" placeholder="25000" aria-describedby="price-help" /></label>
+        <label>Minimum year<input data-bind="minYear" value="${h(state.minYear)}" inputmode="numeric" pattern="[0-9]*" placeholder="2020" aria-describedby="year-help" /></label>
+        <label>Max price<input data-bind="maxPrice" value="${h(state.maxPrice)}" inputmode="numeric" pattern="[0-9]*" placeholder="25000" aria-describedby="price-help" /></label>
         <p id="zip-help" class="sr-only">Five digit US ZIP code used for marketplace searches.</p>
         <p id="radius-help" class="sr-only">Search radius between ten and five hundred miles.</p>
         <p id="year-help" class="sr-only">Optional minimum model year.</p>
         <p id="price-help" class="sr-only">Optional maximum listing price in US dollars.</p>
-        <div class="toggle-row">
+        <fieldset class="toggle-row">
+          <legend class="sr-only">Quick filters</legend>
           <label class="toggle ev-toggle"><input data-bind="evOnly" type="checkbox" ${state.evOnly ? "checked" : ""} /> Battery EV only</label>
+          <label class="toggle hybrid-toggle"><input data-bind="hybridOnly" type="checkbox" ${state.hybridOnly ? "checked" : ""} /> Hybrid / PHEV only</label>
           <label class="toggle"><input data-bind="onlyRecommended" type="checkbox" ${state.onlyRecommended ? "checked" : ""} /> Comma favorites</label>
-        </div>
+        </fieldset>
         <details class="advanced-filters" data-filter-panel="advanced" ${state.openFilterPanels.includes("advanced") ? "open" : ""}>
           <summary>
             <span>Advanced compatibility filters</span>
-            <strong data-advanced-filter-count>${h(advancedFilterSummary())}</strong>
+            <strong data-advanced-filter-count aria-live="polite">${h(advancedFilterSummary())}</strong>
           </summary>
           <div class="advanced-filter-body">
             ${multiSelectControl("Lane centering", "alcFilters", alcFilterOptions, "Minimum speed where lane centering is available.")}
@@ -370,6 +378,9 @@ function renderDynamic() {
   const analyzed = analyzeListings(state.listingText);
   const matchedListings = analyzed.filter((row) => row.matches.length).length;
 
+  const rerenderZones = ["#vehicle-grid", "#target-grid", "#listing-results", "#marketplace-actions"];
+  const lostFocusZone = rerenderZones.find((sel) => app.querySelector(sel)?.contains(document.activeElement));
+
   updateFilterCounts();
   app.querySelector("#stats").innerHTML = [
     stat("matching rows", filtered.length),
@@ -402,6 +413,11 @@ function renderDynamic() {
       </div>`;
   app.querySelector("#listing-count").textContent = `${matchedListings}/${analyzed.length}`;
   app.querySelector("#listing-results").innerHTML = analyzed.map(analysisRow).join("");
+
+  if (lostFocusZone) {
+    const zone = app.querySelector(lostFocusZone);
+    zone?.querySelector('a, button, [tabindex="0"]')?.focus();
+  }
 }
 
 function scheduleRender() {
