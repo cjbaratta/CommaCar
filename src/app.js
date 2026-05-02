@@ -102,7 +102,48 @@ function advancedFilterSummary() {
 
 function sourceButton([label, href], className = "") {
   const classes = ["pill-link", className].filter(Boolean).join(" ");
-  return `<a class="${h(classes)}" href="${h(href)}" target="_blank" rel="noreferrer">${h(label)}</a>`;
+  return `<a class="${h(classes)}" href="${h(href)}" target="_blank" rel="noreferrer">${h(label)}<span class="sr-only"> (opens new tab)</span></a>`;
+}
+
+function hasActiveFilters() {
+  return (
+    state.query !== "" ||
+    state.make !== "All" ||
+    state.minYear !== "" ||
+    state.maxPrice !== "" ||
+    state.bodyStyle !== "Any" ||
+    state.alcFilters.length > 0 ||
+    state.accFilters.length > 0 ||
+    state.supportFilters.length > 0 ||
+    state.evOnly ||
+    state.onlyRecommended
+  );
+}
+
+function clearFilters() {
+  Object.assign(state, {
+    query: "",
+    make: "All",
+    minYear: "",
+    maxPrice: "",
+    bodyStyle: "Any",
+    alcFilters: [],
+    accFilters: [],
+    supportFilters: [],
+    evOnly: false,
+    onlyRecommended: false,
+    openFilterPanels: [],
+  });
+  renderShell();
+  renderDynamic();
+}
+
+function handleListingToggle() {
+  const sample = sampleListings.join("\n");
+  state.listingText = state.listingText === sample ? "" : sample;
+  const textarea = app.querySelector("textarea[data-bind='listingText']");
+  if (textarea) textarea.value = state.listingText;
+  renderDynamic();
 }
 
 function actionSection(label, links, className = "") {
@@ -258,6 +299,7 @@ function renderShell() {
             ${checkboxGroup("Support notes", "supportFilters", supportFilterOptions, "Support limitations and experimental traffic-light or stop-sign handling.")}
           </div>
         </details>
+        <button class="clear-filters-btn" data-action="clear-filters" style="display:none">Clear filters</button>
       </div>
     </section>
 
@@ -302,6 +344,9 @@ function renderShell() {
           </span>
           <strong id="listing-count"></strong>
         </summary>
+        <div class="listing-controls">
+          <button class="listing-toggle-btn" data-action="listing-toggle">Clear sample</button>
+        </div>
         <textarea data-bind="listingText" spellcheck="false">${h(state.listingText)}</textarea>
         <div id="listing-results" class="listing-results"></div>
       </details>
@@ -327,10 +372,18 @@ function renderDynamic() {
 
   updateFilterCounts();
   app.querySelector("#stats").innerHTML = [
-    stat("supported US rows", usVehicles.length),
-    stat("non-US rows hidden", allCompatibilityRows.length - usVehicles.length),
+    stat("matching rows", filtered.length),
+    stat("total US-market", usVehicles.length),
     stat("recommended targets", targetVehicles.length),
   ].join("");
+
+  const clearBtn = app.querySelector("[data-action='clear-filters']");
+  if (clearBtn) clearBtn.style.display = hasActiveFilters() ? "" : "none";
+
+  const listingToggleBtn = app.querySelector("[data-action='listing-toggle']");
+  if (listingToggleBtn) {
+    listingToggleBtn.textContent = state.listingText === sampleListings.join("\n") ? "Clear sample" : "Load sample";
+  }
   app.querySelector("#result-summary").textContent = filterSummary(filtered.length, safeState);
   app.querySelector("#marketplace-actions").innerHTML = targetVehicles.length
     ? marketplaceSearchLinks(targetVehicles, safeState).map(sourceButton).join("")
@@ -396,6 +449,12 @@ app.addEventListener("change", (event) => {
   if (!state.openFilterPanels.includes(group)) state.openFilterPanels = [...state.openFilterPanels, group];
   state[group] = filterElement.checked ? [...state[group], value] : state[group].filter((item) => item !== value);
   renderDynamic();
+});
+
+app.addEventListener("click", (event) => {
+  const action = event.target.closest("[data-action]")?.dataset.action;
+  if (action === "clear-filters") clearFilters();
+  if (action === "listing-toggle") handleListingToggle();
 });
 
 app.addEventListener("toggle", (event) => {

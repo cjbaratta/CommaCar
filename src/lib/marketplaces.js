@@ -102,6 +102,23 @@ export function marketplaceLinks(vehicle, state) {
   return marketplaceTemplates.map(([label, kind]) => [label, marketplaceUrl(kind, query, state, vehicle)]);
 }
 
+const scanSites = {
+  cars: "site:cars.com/vehicledetail",
+  autotrader: "site:autotrader.com/cars-for-sale",
+  autonation: "site:autonationusa.com/cars-for-sale",
+  autolist: "site:autolist.com/listings",
+  craigslist: "site:craigslist.org/search/cta",
+};
+
+const scanLabels = {
+  cars: "Scan Cars.com",
+  autotrader: "Scan Autotrader",
+  autonation: "Scan AutoNation",
+  autolist: "Scan Autolist",
+  craigslist: "Scan Craigslist",
+  facebook: "Scan Facebook",
+};
+
 export function marketplaceSearchLinks(sourceVehicles, state) {
   const grouped = [...new Map(sourceVehicles.slice(0, 8).map((vehicle) => [vehicle.canonicalName, vehicle])).values()];
   if (!grouped.length) return [];
@@ -111,18 +128,10 @@ export function marketplaceSearchLinks(sourceVehicles, state) {
   const priceText = state.maxPrice ? ` under ${state.maxPrice}` : "";
   const query = `${terms}${yearText}${priceText}`;
 
-  return marketplaceTemplates.map(([label, kind]) => {
-    if (["cars", "autotrader", "autonation", "autolist"].includes(kind)) {
-      const targetLabels = {
-        cars: "Cars.com top target",
-        autotrader: "Autotrader top target",
-        autonation: "AutoNation top target",
-        autolist: "Autolist top target",
-      };
-      return [targetLabels[kind], marketplaceUrl(kind, searchTextFor(grouped[0], state), state, grouped[0])];
-    }
-
-    return [label, marketplaceUrl(kind, query, state)];
+  return marketplaceTemplates.map(([, kind]) => {
+    const label = scanLabels[kind] ?? kind;
+    if (kind === "facebook") return [label, marketplaceUrl(kind, query, state)];
+    return [label, siteSearchUrl(scanSites[kind], query, state)];
   });
 }
 

@@ -61,6 +61,12 @@ const bodyStyleRules = [
       "venza",
       "wrangler",
       "yukon",
+      "bz4x",
+      "ioniq 5",
+      "model y",
+      "r1s",
+      "r1t",
+      "solterra",
     ],
   },
   {
@@ -100,6 +106,7 @@ const bodyStyleRules = [
 const electricTokens = [
   "bolt euv",
   "bolt ev",
+  "bz4x",
   "electric",
   "e-crafter",
   "e-golf",
@@ -118,7 +125,6 @@ const electricTokens = [
   "r1s",
   "r1t",
   "solterra",
-  "bZ4X",
 ];
 
 const nonUsPatterns = [

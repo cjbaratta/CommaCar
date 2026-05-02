@@ -718,7 +718,6 @@ dd {
 
 .target-actions .pill-link {
   flex: 1 1 120px;
-  min-height: 36px;
 }
 
 .card-actions {
@@ -758,7 +757,7 @@ dd {
 
 .action-label {
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -775,7 +774,7 @@ dd {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 32px;
+  min-height: 44px;
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 6px 10px;
@@ -791,7 +790,6 @@ dd {
 
 .action-grid .pill-link {
   width: 100%;
-  min-height: 38px;
   padding: 8px 10px;
 }
 
@@ -815,6 +813,48 @@ dd {
   border-color: var(--accent-strong);
   background: var(--accent-strong);
   color: #fff;
+}
+
+.clear-filters-btn {
+  grid-column: 1 / -1;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 14px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+}
+
+.clear-filters-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.listing-controls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 16px 10px;
+}
+
+.listing-toggle-btn {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 14px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.listing-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
 }
 
 .empty-state {
