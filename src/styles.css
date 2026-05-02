@@ -245,6 +245,7 @@ textarea {
 
 .feature-chip {
   display: grid;
+  align-content: center;
   gap: 2px;
   min-height: 48px;
   padding: 8px 10px;
@@ -428,6 +429,7 @@ textarea {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   gap: 14px;
+  align-items: start;
 }
 
 details {
@@ -467,7 +469,9 @@ details .listing-results {
 
 .vehicle-card {
   display: grid;
-  gap: 12px;
+  gap: 14px;
+  align-content: start;
+  align-self: start;
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -485,6 +489,11 @@ details .listing-results {
   margin: 3px 0 0;
   font-size: 1.45rem;
   line-height: 1.05;
+}
+
+.vehicle-summary {
+  display: grid;
+  gap: 8px;
 }
 
 .badge,
@@ -517,19 +526,46 @@ details .listing-results {
 }
 
 .year-strip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6rem;
+  min-height: 44px;
+  max-width: 100%;
   background: #ece7dc;
   color: #35322d;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  white-space: normal;
 }
 
-dl {
+.vehicle-summary .year-strip {
+  width: 100%;
+}
+
+.spec-list {
   display: grid;
-  gap: 8px;
+  gap: 0;
+  align-content: start;
   margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fbfaf7;
+  overflow: hidden;
 }
 
-dl div {
+.spec-list div {
   display: grid;
-  gap: 3px;
+  gap: 4px;
+  padding: 12px;
+}
+
+.spec-list div + div {
+  border-top: 1px solid var(--line);
 }
 
 dt {
@@ -559,22 +595,77 @@ dd {
   gap: 7px;
 }
 
+.card-actions {
+  display: grid;
+  gap: 11px;
+  align-content: start;
+  padding-top: 2px;
+}
+
+.action-section {
+  display: grid;
+  gap: 7px;
+}
+
+.action-label {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(38px, auto);
+  gap: 7px;
+}
+
 .pill-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 32px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 6px;
   padding: 6px 10px;
   background: #fff;
   color: var(--accent-strong);
   font-size: 0.78rem;
   font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
   text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.action-grid .pill-link {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 10px;
+}
+
+.marketplace-section .pill-link {
+  border-color: #b9d1cb;
+  background: #eef8f6;
+  color: var(--accent-strong);
+}
+
+.research-section .pill-link {
+  background: #fbfaf7;
+  color: #48443e;
 }
 
 .muted-links .pill-link {
   color: #48443e;
+}
+
+.research-section .kit-link {
+  grid-column: 1 / -1;
+  border-color: var(--accent-strong);
+  background: var(--accent-strong);
+  color: #fff;
 }
 
 .empty-state {
@@ -629,6 +720,10 @@ dd {
   }
 
   .vehicle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-grid {
     grid-template-columns: 1fr;
   }
 }

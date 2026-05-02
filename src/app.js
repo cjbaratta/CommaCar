@@ -265,6 +265,14 @@ function bodyStyleOptions() {
     .join("");
 }
 
+function displayYears(vehicle) {
+  const years = [...vehicle.years].sort((a, b) => a - b);
+  if (!years.length) return vehicle.yearsLabel;
+  const consecutive = years.every((year, index) => index === 0 || year === years[index - 1] + 1);
+  if (consecutive && years.length > 1) return `${years[0]}-${years[years.length - 1]}`;
+  return years.join(", ");
+}
+
 function topTargets(vehicles) {
   const grouped = [...new Map(vehicles.map((vehicle) => [`${vehicle.make} ${vehicle.model}`, vehicle])).values()];
   return grouped.slice(0, 6);
@@ -293,8 +301,20 @@ function stat(label, value) {
   return `<div class="stat"><strong>${value}</strong><span>${label}</span></div>`;
 }
 
-function sourceButton([label, href]) {
-  return `<a class="pill-link" href="${href}" target="_blank" rel="noreferrer">${label}</a>`;
+function sourceButton([label, href], className = "") {
+  const classes = ["pill-link", className].filter(Boolean).join(" ");
+  return `<a class="${classes}" href="${href}" target="_blank" rel="noreferrer">${label}</a>`;
+}
+
+function actionSection(label, links, className = "") {
+  return `
+    <div class="action-section ${className}">
+      <span class="action-label">${label}</span>
+      <div class="action-grid">
+        ${links.map(([linkLabel, href, linkClass]) => sourceButton([linkLabel, href], linkClass)).join("")}
+      </div>
+    </div>
+  `;
 }
 
 function capabilityFeatures(vehicle) {
@@ -342,19 +362,18 @@ function vehicleCard(vehicle) {
           ${favorite ? '<span class="badge">Comma pick</span>' : ""}
         </div>
       </div>
-      <div class="year-strip">${vehicle.yearsLabel}</div>
-      ${featureChips(vehicle)}
-      <dl>
+      <div class="vehicle-summary">
+        <div class="year-strip">${displayYears(vehicle)}</div>
+        ${featureChips(vehicle)}
+      </div>
+      <dl class="spec-list">
         <div><dt>Trim check</dt><dd>${vehicle.requirement}</dd></div>
         <div><dt>Harness</dt><dd>${vehicle.harness}</dd></div>
       </dl>
       ${vehicle.note ? `<div class="notice">${vehicle.note}</div>` : ""}
-      <div class="link-group">
-        ${marketplaceLinks(vehicle).map(sourceButton).join("")}
-      </div>
-      <div class="link-group muted-links">
-        ${reviewLinks(vehicle).map(sourceButton).join("")}
-        <a class="pill-link" href="${vehicle.shopUrl}" target="_blank" rel="noreferrer">Comma kit</a>
+      <div class="card-actions">
+        ${actionSection("Listings", marketplaceLinks(vehicle), "marketplace-section")}
+        ${actionSection("Research", [...reviewLinks(vehicle), ["Comma kit", vehicle.shopUrl, "kit-link"]], "research-section")}
       </div>
     </article>
   `;
@@ -427,7 +446,7 @@ function searchTargetCard(vehicle) {
         <h3>${vehicle.model}</h3>
       </div>
       <div class="inline-badges">
-        <div class="year-strip">${vehicle.yearsLabel}</div>
+        <div class="year-strip">${displayYears(vehicle)}</div>
         ${isEv(vehicle) ? '<span class="badge ev-badge">EV</span>' : ""}
       </div>
       <p>${vehicle.requirement}</p>
