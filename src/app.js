@@ -95,6 +95,11 @@ function stat(label, value) {
   return `<div class="stat"><strong>${h(value)}</strong><span>${h(label)}</span></div>`;
 }
 
+function advancedFilterSummary() {
+  const count = state.alcFilters.length + state.accFilters.length + state.supportFilters.length;
+  return count ? `${count} active` : "Any compatibility";
+}
+
 function sourceButton([label, href], className = "") {
   const classes = ["pill-link", className].filter(Boolean).join(" ");
   return `<a class="${h(classes)}" href="${h(href)}" target="_blank" rel="noreferrer">${h(label)}</a>`;
@@ -145,7 +150,10 @@ function vehicleCard(vehicle, safeState) {
       ${vehicle.note ? `<div class="notice">${h(vehicle.note)}</div>` : ""}
       <div class="card-actions">
         ${actionSection("Listings", marketplaceLinks(vehicle, safeState), "marketplace-section")}
-        ${actionSection("Research", [...reviewLinks(vehicle), ["Comma kit", vehicle.shopUrl, "kit-link"]], "research-section")}
+        <details class="card-more">
+          <summary>Research and kit</summary>
+          ${actionSection("Research", [...reviewLinks(vehicle), ["Comma kit", vehicle.shopUrl, "kit-link"]], "research-section")}
+        </details>
       </div>
     </article>
   `;
@@ -169,18 +177,23 @@ function filterSummary(count, safeState) {
 function searchTargetCard(vehicle, safeState) {
   return `
     <article class="target-card">
-      <div>
-        <span class="eyebrow">${h(vehicle.make)}</span>
-        <h3>${h(vehicle.model)}</h3>
-      </div>
-      <div class="inline-badges">
-        <div class="year-strip">${h(displayYears(vehicle))}</div>
-        ${marketBadges(vehicle)}
+      <div class="target-card-head">
+        <div>
+          <span class="eyebrow">${h(vehicle.make)}</span>
+          <h3>${h(vehicle.model)}</h3>
+        </div>
+        <div class="inline-badges">
+          <div class="year-strip">${h(displayYears(vehicle))}</div>
+          ${marketBadges(vehicle)}
+        </div>
       </div>
       <p>${h(vehicle.requirement)}</p>
       ${featureChips(vehicle)}
-      <div class="link-group">${marketplaceLinks(vehicle, safeState).slice(0, 3).map(sourceButton).join("")}</div>
-      <div class="link-group muted-links">${reviewLinks(vehicle).slice(0, 2).map(sourceButton).join("")}</div>
+      <div class="link-group target-actions">${marketplaceLinks(vehicle, safeState).slice(0, 3).map(sourceButton).join("")}</div>
+      <details class="card-more target-more">
+        <summary>Research links</summary>
+        <div class="link-group muted-links">${reviewLinks(vehicle).slice(0, 2).map(sourceButton).join("")}</div>
+      </details>
     </article>
   `;
 }
@@ -215,24 +228,36 @@ function renderShell() {
     <section class="hero">
       <div class="hero-copy">
         <span class="eyebrow">Comma Car Finder</span>
-        <h1>Find openpilot-ready cars near you.</h1>
-        <p>Filter US-market compatible models, then jump into pre-built marketplace searches.</p>
+        <h1>Search openpilot-ready cars near you.</h1>
+        <p>Find compatible US-market models, compare the key trim requirements, and open buyer-ready marketplace searches.</p>
       </div>
       <div class="control-panel" aria-label="Search filters">
+        <label class="search main-search">Model, trim, or capability<input data-bind="query" value="${h(state.query)}" placeholder="Corolla, EV6, stop & go, 2021..." /></label>
         <label>ZIP code<input data-bind="zip" value="${h(state.zip)}" inputmode="numeric" maxlength="5" aria-describedby="zip-help" /></label>
         <label>Radius<input data-bind="radius" value="${h(state.radius)}" inputmode="numeric" aria-describedby="radius-help" /></label>
         <label>Make<select data-bind="make">${optionList(["All", ...makes], state.make)}</select></label>
+        <label>Body style<select data-bind="bodyStyle">${optionList(bodyStyles, state.bodyStyle)}</select></label>
         <label>Minimum year<input data-bind="minYear" value="${h(state.minYear)}" inputmode="numeric" placeholder="2020" aria-describedby="year-help" /></label>
         <label>Max price<input data-bind="maxPrice" value="${h(state.maxPrice)}" inputmode="numeric" placeholder="25000" aria-describedby="price-help" /></label>
-        <label>Body style<select data-bind="bodyStyle">${optionList(bodyStyles, state.bodyStyle)}</select></label>
         <p id="zip-help" class="sr-only">Five digit US ZIP code used for marketplace searches.</p>
         <p id="radius-help" class="sr-only">Search radius between ten and five hundred miles.</p>
         <p id="year-help" class="sr-only">Optional minimum model year.</p>
         <p id="price-help" class="sr-only">Optional maximum listing price in US dollars.</p>
-        <label class="toggle ev-toggle"><input data-bind="evOnly" type="checkbox" ${state.evOnly ? "checked" : ""} /> Battery EV only</label>
-        ${multiSelectControl("Automated lane centering", "alcFilters", alcFilterOptions, "Filter by the minimum speed where lane centering is available.")}
-        ${multiSelectControl("Adaptive cruise", "accFilters", accFilterOptions, "Filter by adaptive cruise behavior, including stop-and-go support.")}
-        ${checkboxGroup("Support notes", "supportFilters", supportFilterOptions, "Filter for support limitations and experimental traffic-light or stop-sign handling.")}
+        <div class="toggle-row">
+          <label class="toggle ev-toggle"><input data-bind="evOnly" type="checkbox" ${state.evOnly ? "checked" : ""} /> Battery EV only</label>
+          <label class="toggle"><input data-bind="onlyRecommended" type="checkbox" ${state.onlyRecommended ? "checked" : ""} /> Comma favorites</label>
+        </div>
+        <details class="advanced-filters" data-filter-panel="advanced" ${state.openFilterPanels.includes("advanced") ? "open" : ""}>
+          <summary>
+            <span>Advanced compatibility filters</span>
+            <strong data-advanced-filter-count>${h(advancedFilterSummary())}</strong>
+          </summary>
+          <div class="advanced-filter-body">
+            ${multiSelectControl("Lane centering", "alcFilters", alcFilterOptions, "Minimum speed where lane centering is available.")}
+            ${multiSelectControl("Adaptive cruise", "accFilters", accFilterOptions, "Cruise behavior, including stop-and-go support.")}
+            ${checkboxGroup("Support notes", "supportFilters", supportFilterOptions, "Support limitations and experimental traffic-light or stop-sign handling.")}
+          </div>
+        </details>
       </div>
     </section>
 
@@ -242,16 +267,16 @@ function renderShell() {
       <div class="search-header">
         <div>
           <span class="eyebrow">Market scan</span>
-          <h2>Start with these searches</h2>
+          <h2>Recommended searches</h2>
+          <p>Best-fit targets update as you filter. Open a marketplace search, then confirm the exact trim and package before buying.</p>
         </div>
-        <label class="toggle"><input data-bind="onlyRecommended" type="checkbox" ${state.onlyRecommended ? "checked" : ""} /> Comma favorites</label>
       </div>
-      <label class="search main-search">Model, trim, or requirement<input data-bind="query" value="${h(state.query)}" placeholder="Corolla, EV6, ACC, 2021..." /></label>
       <div id="result-summary" class="result-summary"></div>
       <div id="marketplace-actions" class="marketplace-actions"></div>
-      <div class="source-note">
-        Direct marketplace links use normalized model names without compatibility-only notes like regional availability or HDA variants. Non-US rows are hidden by default because these searches are ZIP-based.
-      </div>
+      <details class="source-details">
+        <summary>Search/link notes</summary>
+        <p>Direct marketplace links use normalized model names without compatibility-only notes like regional availability or HDA variants. Non-US rows are hidden by default because these searches are ZIP-based.</p>
+      </details>
       <div id="target-grid" class="target-grid"></div>
     </section>
 
@@ -289,6 +314,8 @@ function updateFilterCounts() {
     const group = element.dataset.filterCount;
     element.textContent = state[group].length ? `${state[group].length} selected` : "Any";
   });
+  const advancedCount = app.querySelector("[data-advanced-filter-count]");
+  if (advancedCount) advancedCount.textContent = advancedFilterSummary();
 }
 
 function renderDynamic() {
@@ -300,9 +327,9 @@ function renderDynamic() {
 
   updateFilterCounts();
   app.querySelector("#stats").innerHTML = [
-    stat("US-market compatibility rows", usVehicles.length),
-    stat("hidden non-US rows", allCompatibilityRows.length - usVehicles.length),
-    stat("current search targets", targetVehicles.length),
+    stat("supported US rows", usVehicles.length),
+    stat("non-US rows hidden", allCompatibilityRows.length - usVehicles.length),
+    stat("recommended targets", targetVehicles.length),
   ].join("");
   app.querySelector("#result-summary").textContent = filterSummary(filtered.length, safeState);
   app.querySelector("#marketplace-actions").innerHTML = targetVehicles.length
@@ -365,6 +392,7 @@ app.addEventListener("change", (event) => {
   if (!filterElement) return;
   const group = filterElement.dataset.filterGroup;
   const value = filterElement.value;
+  if (!state.openFilterPanels.includes("advanced")) state.openFilterPanels = [...state.openFilterPanels, "advanced"];
   if (!state.openFilterPanels.includes(group)) state.openFilterPanels = [...state.openFilterPanels, group];
   state[group] = filterElement.checked ? [...state[group], value] : state[group].filter((item) => item !== value);
   renderDynamic();

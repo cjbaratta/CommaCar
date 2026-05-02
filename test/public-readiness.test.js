@@ -4,7 +4,7 @@ import test from "node:test";
 import { marketplaceLinks } from "../src/lib/marketplaces.js";
 import { normalizedState } from "../src/lib/state.js";
 import { escapeHtml } from "../src/lib/text.js";
-import { filterVehicles, usVehicles, vehicles } from "../src/lib/vehicles.js";
+import { filterVehicles, topTargets, usVehicles, vehicles } from "../src/lib/vehicles.js";
 
 const baseState = normalizedState({
   query: "",
@@ -85,4 +85,11 @@ test("capability filters still work with precomputed features", () => {
   assert.ok(results.length > 0);
   assert.ok(results.every((vehicle) => vehicle.features.some(([label, value]) => label === "ACC" && value === "stop & go")));
   assert.ok(results.every((vehicle) => vehicle.features.some(([label, value]) => label === "ALC" && value === "all speeds")));
+});
+
+test("default search targets prioritize practical recommendations over data order", () => {
+  const targets = topTargets(filterVehicles(baseState)).map((vehicle) => vehicle.canonicalName);
+
+  assert.deepEqual(targets.slice(0, 3), ["Hyundai Ioniq 5", "Kia EV6", "Toyota Prius"]);
+  assert.ok(!targets[0].startsWith("Acura "));
 });

@@ -19,6 +19,18 @@ export const favoriteNames = new Set([
   "Chevrolet Silverado 1500",
 ]);
 
+export const starterTargetNames = [
+  "Hyundai Ioniq 5",
+  "Kia EV6",
+  "Toyota Prius",
+  "Toyota Highlander",
+  "Hyundai Palisade",
+  "Toyota Corolla",
+  "Hyundai Sonata",
+  "Ram 1500",
+  "Chevrolet Silverado 1500",
+];
+
 export const bodyStyles = ["Any", "SUV / crossover / van", "Sedan / hatchback", "Truck"];
 
 export const alcFilterOptions = [

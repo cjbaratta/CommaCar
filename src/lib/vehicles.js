@@ -1,5 +1,5 @@
 import { commaVehicles } from "../data/vehicles.js";
-import { bodyStyles, favoriteNames } from "./config.js";
+import { bodyStyles, favoriteNames, starterTargetNames } from "./config.js";
 import { cleanText, normalize, stripModelQualifier } from "./text.js";
 
 const bodyStyleRules = [
@@ -246,9 +246,29 @@ export function matchesCapabilities(vehicle, state) {
   return hasAlc && hasAcc && hasSupport;
 }
 
+const starterRank = new Map(starterTargetNames.map((name, index) => [name, index]));
+
+function targetScore(vehicle) {
+  const years = vehicle.years.length ? vehicle.years : [0];
+  const latestYear = Math.max(...years);
+  const hasStopAndGo = vehicle.features.some(([label, value]) => label === "ACC" && value === "stop & go");
+  const hasAllSpeedLaneCentering = vehicle.features.some(([label, value]) => label === "ALC" && value === "all speeds");
+  const starterPosition = starterRank.get(vehicle.canonicalName);
+
+  let score = latestYear / 100;
+  if (starterPosition !== undefined) score += 100 - starterPosition;
+  if (vehicle.isFavorite) score += 20;
+  if (hasStopAndGo) score += 6;
+  if (hasAllSpeedLaneCentering) score += 4;
+  if (vehicle.isElectric) score += 2;
+  return score;
+}
+
 export function topTargets(sourceVehicles) {
   const grouped = [...new Map(sourceVehicles.map((vehicle) => [vehicle.canonicalName, vehicle])).values()];
-  return grouped.slice(0, 6);
+  return grouped
+    .sort((a, b) => targetScore(b) - targetScore(a) || a.canonicalName.localeCompare(b.canonicalName))
+    .slice(0, 6);
 }
 
 export { bodyStyles };
