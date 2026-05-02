@@ -2,15 +2,18 @@
   color-scheme: light;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f4f3ef;
-  color: #171615;
-  --ink: #171615;
-  --muted: #6d6a63;
-  --line: #d8d3c9;
+  background: #f6f7f4;
+  color: #181a1b;
+  --ink: #181a1b;
+  --muted: #626b70;
+  --line: #d5dde0;
   --panel: #ffffff;
-  --soft: #ebe7de;
+  --soft: #eef3f0;
   --accent: #0f766e;
   --accent-strong: #115e59;
+  --accent-soft: #d9f1ed;
+  --sky: #dbeafe;
+  --violet: #ede9fe;
   --warn: #a16207;
 }
 
@@ -40,23 +43,44 @@ textarea {
 }
 
 .hero {
+  position: relative;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
-  gap: 32px;
-  align-items: end;
-  min-height: 420px;
-  padding: 48px clamp(18px, 4vw, 56px) 34px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+  gap: 26px;
+  align-items: center;
+  min-height: 330px;
+  padding: 32px clamp(18px, 4vw, 48px);
   background:
-    linear-gradient(125deg, rgba(23, 22, 21, 0.78), rgba(20, 83, 76, 0.58)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=80") center/cover;
+    radial-gradient(circle at 78% 26%, rgba(237, 233, 254, 0.9), transparent 26%),
+    linear-gradient(135deg, #172326, #1f433d 58%, #39464a);
   color: #fff;
 }
 
+.hero::before {
+  position: absolute;
+  inset: auto -12% -34% 42%;
+  height: 230px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent 18%, rgba(255, 255, 255, 0.14) 18% 22%, transparent 22%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(153, 246, 228, 0.16));
+  content: "";
+  transform: rotate(-9deg);
+}
+
+.hero-copy,
+.control-panel {
+  position: relative;
+  z-index: 1;
+}
+
 .hero h1 {
-  max-width: 900px;
+  max-width: 720px;
   margin: 12px 0 14px;
-  font-size: clamp(2.3rem, 6vw, 5.9rem);
-  line-height: 0.95;
+  font-size: clamp(2.1rem, 4.6vw, 4.1rem);
+  line-height: 1;
   letter-spacing: 0;
 }
 
@@ -86,9 +110,11 @@ textarea {
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   padding: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(246, 249, 248, 0.95);
+  color: var(--ink);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.2);
 }
 
 .control-panel label:nth-child(3),
@@ -120,6 +146,23 @@ textarea {
   outline: none;
 }
 
+.field-help {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
@@ -135,7 +178,7 @@ textarea:focus {
 }
 
 .stat {
-  padding: 22px clamp(18px, 4vw, 56px);
+  padding: 16px clamp(18px, 4vw, 48px);
   border-right: 1px solid var(--line);
 }
 
@@ -172,7 +215,7 @@ textarea {
 }
 
 .search-board {
-  padding: 30px clamp(18px, 3vw, 36px);
+  padding: 24px clamp(18px, 3vw, 36px);
   border-bottom: 1px solid var(--line);
   background: var(--soft);
 }
@@ -221,7 +264,7 @@ textarea {
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fff;
+  background: var(--panel);
 }
 
 .target-card h3 {
@@ -251,7 +294,7 @@ textarea {
   padding: 8px 10px;
   border: 1px solid var(--line);
   border-radius: 6px;
-  background: #f8fafc;
+  background: #f6f8fb;
   color: #334155;
   font-size: 0.78rem;
   line-height: 1.2;
@@ -330,9 +373,10 @@ textarea {
   display: grid;
   gap: 8px;
   margin: 0;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid var(--line);
   border-radius: 6px;
   padding: 11px;
+  background: #fff;
 }
 
 .multi-select {
@@ -361,15 +405,19 @@ textarea {
   padding: 0 10px 10px;
 }
 
+.multi-select .field-help {
+  padding: 0 12px 9px;
+}
+
 .multi-select .check-pill {
   border-color: var(--line);
-  background: var(--soft);
+  background: #f8fafc;
   color: var(--ink);
 }
 
 .filter-group legend {
   padding: 0 5px;
-  color: #99f6e4;
+  color: var(--accent-strong);
   font-size: 0.76rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -388,11 +436,11 @@ textarea {
   gap: 7px;
   width: auto;
   min-height: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid var(--line);
   border-radius: 999px;
   padding: 6px 9px;
-  background: rgba(255, 255, 255, 0.13);
-  color: #fff;
+  background: #f8fafc;
+  color: var(--ink);
   font-size: 0.78rem;
   font-weight: 800;
 }
@@ -501,7 +549,7 @@ details .listing-results {
   width: fit-content;
   border-radius: 999px;
   padding: 5px 9px;
-  background: #ccfbf1;
+  background: var(--accent-soft);
   color: #134e4a;
   font-size: 0.75rem;
   font-weight: 900;
@@ -521,7 +569,7 @@ details .listing-results {
 }
 
 .ev-badge {
-  background: #dbeafe;
+  background: var(--sky);
   color: #1e3a8a;
 }
 
@@ -532,7 +580,7 @@ details .listing-results {
   min-width: 6rem;
   min-height: 44px;
   max-width: 100%;
-  background: #ece7dc;
+  background: #eef2f7;
   color: #35322d;
   border-radius: 6px;
   padding: 8px 12px;
@@ -554,7 +602,7 @@ details .listing-results {
   margin: 0;
   border: 1px solid var(--line);
   border-radius: 6px;
-  background: #fbfaf7;
+  background: #fbfcfd;
   overflow: hidden;
 }
 
@@ -647,13 +695,13 @@ dd {
 }
 
 .marketplace-section .pill-link {
-  border-color: #b9d1cb;
+  border-color: #b9d8d2;
   background: #eef8f6;
   color: var(--accent-strong);
 }
 
 .research-section .pill-link {
-  background: #fbfaf7;
+  background: #f8fafc;
   color: #48443e;
 }
 
@@ -688,6 +736,10 @@ dd {
     grid-template-columns: 1fr;
   }
 
+  .hero {
+    min-height: 0;
+  }
+
   .search-header,
   .toolbar {
     display: grid;
@@ -703,8 +755,16 @@ dd {
 
 @media (max-width: 560px) {
   .hero {
-    min-height: 560px;
-    padding-top: 34px;
+    min-height: 0;
+    padding: 24px 16px;
+  }
+
+  .hero h1 {
+    font-size: 2.35rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
   }
 
   .control-panel {

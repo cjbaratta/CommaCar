@@ -6,7 +6,10 @@
   "scripts": {
     "build:data": "node scripts/build-vehicles-data.mjs /tmp/comma-vehicles.html",
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build"
+    "build": "vite build",
+    "lint": "node scripts/lint.mjs",
+    "format": "node scripts/format.mjs",
+    "test": "node --test"
   },
   "dependencies": {
     "vite": "^7.0.0"
