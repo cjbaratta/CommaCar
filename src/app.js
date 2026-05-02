@@ -250,8 +250,7 @@ function filteredVehicles() {
     })
     .filter((vehicle) => !state.evOnly || isEv(vehicle))
     .filter(matchesPageCapabilities)
-    .filter((vehicle) => !needle || normalize(`${vehicle.make} ${vehicle.model} ${vehicle.yearsLabel} ${vehicle.requirement}`).includes(needle))
-    .slice(0, 80);
+    .filter((vehicle) => !needle || normalize(`${vehicle.make} ${vehicle.model} ${vehicle.yearsLabel} ${vehicle.requirement}`).includes(needle));
 }
 
 function optionList() {
