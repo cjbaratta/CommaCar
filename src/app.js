@@ -217,7 +217,7 @@ function filterSummary(count, safeState) {
   if (safeState.hybridOnly) pieces.push("Hybrid / PHEV");
   if (safeState.onlyRecommended) pieces.push("Comma favorites");
   const scope = pieces.length ? pieces.join(" · ") : "all US-market supported vehicles";
-  return `Showing ${count} compatibility ${count === 1 ? "row" : "rows"} for ${scope}.`;
+  return `Showing ${count} compatible ${count === 1 ? "vehicle" : "vehicles"} for ${scope}.`;
 }
 
 function searchTargetCard(vehicle, safeState) {
@@ -274,9 +274,9 @@ function renderShell() {
     <a href="#vehicle-grid" class="skip-link">Skip to results</a>
     <section class="hero">
       <div class="hero-copy">
-        <span class="eyebrow">Comma Car Finder</span>
-        <h1>Search openpilot-ready cars near you.</h1>
-        <p>Find compatible US-market models, compare the key trim requirements, and open buyer-ready marketplace searches.</p>
+        <span class="eyebrow">PilotCompatible</span>
+        <h1>Find openpilot-ready cars near you.</h1>
+        <p>Browse compatible US-market models, compare trim requirements, and launch marketplace searches.</p>
       </div>
       <div class="control-panel" aria-label="Search filters">
         <label class="search main-search">Model, trim, or capability<input data-bind="query" value="${h(state.query)}" placeholder="Corolla, EV6, stop & go, 2021..." /></label>
@@ -284,7 +284,7 @@ function renderShell() {
         <label>Radius<input data-bind="radius" value="${h(state.radius)}" inputmode="numeric" pattern="[0-9]*" aria-describedby="radius-help" /></label>
         <label>Make<select data-bind="make">${optionList(["All", ...makes], state.make)}</select></label>
         <label>Body style<select data-bind="bodyStyle">${optionList(bodyStyles, state.bodyStyle)}</select></label>
-        <label>Minimum year<input data-bind="minYear" value="${h(state.minYear)}" inputmode="numeric" pattern="[0-9]*" placeholder="2020" aria-describedby="year-help" /></label>
+        <label>Min year<input data-bind="minYear" value="${h(state.minYear)}" inputmode="numeric" pattern="[0-9]*" placeholder="2020" aria-describedby="year-help" /></label>
         <label>Max price<input data-bind="maxPrice" value="${h(state.maxPrice)}" inputmode="numeric" pattern="[0-9]*" placeholder="25000" aria-describedby="price-help" /></label>
         <p id="zip-help" class="sr-only">Five digit US ZIP code used for marketplace searches.</p>
         <p id="radius-help" class="sr-only">Search radius between ten and five hundred miles.</p>
@@ -304,7 +304,7 @@ function renderShell() {
           <div class="advanced-filter-body">
             ${multiSelectControl("Lane centering", "alcFilters", alcFilterOptions, "Minimum speed where lane centering is available.")}
             ${multiSelectControl("Adaptive cruise", "accFilters", accFilterOptions, "Cruise behavior, including stop-and-go support.")}
-            ${checkboxGroup("Support notes", "supportFilters", supportFilterOptions, "Support limitations and experimental traffic-light or stop-sign handling.")}
+            ${checkboxGroup("Support notes", "supportFilters", supportFilterOptions, "Experimental features and known support limitations.")}
           </div>
         </details>
         <button class="clear-filters-btn" data-action="clear-filters" style="display:none">Clear filters</button>
@@ -318,14 +318,14 @@ function renderShell() {
         <div>
           <span class="eyebrow">Market scan</span>
           <h2>Recommended searches</h2>
-          <p>Best-fit targets update as you filter. Open a marketplace search, then confirm the exact trim and package before buying.</p>
+          <p>Results update as you filter. Open a search to browse listings, then confirm trim and package before buying.</p>
         </div>
       </div>
       <div id="result-summary" class="result-summary"></div>
       <div id="marketplace-actions" class="marketplace-actions"></div>
       <details class="source-details">
-        <summary>Search/link notes</summary>
-        <p>Direct marketplace links use normalized model names without compatibility-only notes like regional availability or HDA variants. Non-US rows are hidden by default because these searches are ZIP-based.</p>
+        <summary>About these links</summary>
+        <p>Links are simplified for search and may omit region-specific notes. Non-US models are hidden since searches are location-based.</p>
       </details>
       <div id="target-grid" class="target-grid"></div>
     </section>
@@ -334,10 +334,10 @@ function renderShell() {
       <section class="results">
         <div class="section-title">
           <span class="eyebrow">Compatibility database</span>
-          <h2>Supported model details</h2>
+          <h2>Supported models</h2>
         </div>
         <div class="source-note">
-          Compatibility data is generated from <a href="https://comma.ai/vehicles" target="_blank" rel="noreferrer">comma.ai/vehicles</a>. Source page last updated February 20, 2026; local data generated May 1, 2026. Always confirm trim/package details before buying.
+          Data sourced from <a href="https://comma.ai/vehicles" target="_blank" rel="noreferrer">comma.ai/vehicles</a>, last updated May 1, 2026. Always confirm trim and package before buying.
         </div>
         <div id="vehicle-grid" class="vehicle-grid"></div>
       </section>
@@ -347,8 +347,8 @@ function renderShell() {
       <details>
         <summary>
           <span>
-            <span class="eyebrow">Fallback checker</span>
-            Paste listings if marketplace search misses
+            <span class="eyebrow">Listing checker</span>
+            Can't find it? Paste a listing to check compatibility.
           </span>
           <strong id="listing-count"></strong>
         </summary>
@@ -383,9 +383,8 @@ function renderDynamic() {
 
   updateFilterCounts();
   app.querySelector("#stats").innerHTML = [
-    stat("matching rows", filtered.length),
-    stat("total US-market", usVehicles.length),
-    stat("recommended targets", targetVehicles.length),
+    stat("compatible vehicles", filtered.length),
+    stat("in database", usVehicles.length),
   ].join("");
 
   const clearBtn = app.querySelector("[data-action='clear-filters']");
@@ -398,18 +397,18 @@ function renderDynamic() {
   app.querySelector("#result-summary").textContent = filterSummary(filtered.length, safeState);
   app.querySelector("#marketplace-actions").innerHTML = targetVehicles.length
     ? marketplaceSearchLinks(targetVehicles, safeState).map(sourceButton).join("")
-    : `<span>No marketplace searches until filters match at least one supported model.</span>`;
+    : `<span>Adjust your filters to find compatible vehicles and unlock marketplace searches.</span>`;
   app.querySelector("#target-grid").innerHTML = targetVehicles.length
     ? targetVehicles.map((vehicle) => searchTargetCard(vehicle, safeState)).join("")
     : `<div class="empty-state">
-        <strong>No supported targets match those filters.</strong>
-        <span>Try clearing search text or broadening make, year, body style, or favorites.</span>
+        <strong>No matching vehicles found.</strong>
+        <span>Try clearing your search or adjusting make, year, body style, or favorites.</span>
       </div>`;
   app.querySelector("#vehicle-grid").innerHTML = filtered.length
     ? filtered.map((vehicle) => vehicleCard(vehicle, safeState)).join("")
     : `<div class="empty-state">
-        <strong>No US-market supported rows match those filters.</strong>
-        <span>Try clearing the search text, changing make, or turning off Comma favorites.</span>
+        <strong>No compatible vehicles match your filters.</strong>
+        <span>Try clearing your search, adjusting the make filter, or turning off Comma favorites.</span>
       </div>`;
   app.querySelector("#listing-count").textContent = `${matchedListings}/${analyzed.length}`;
   app.querySelector("#listing-results").innerHTML = analyzed.map(analysisRow).join("");
