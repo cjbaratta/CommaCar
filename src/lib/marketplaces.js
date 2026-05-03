@@ -77,7 +77,7 @@ function carsComUrl(vehicle, query, state) {
     params.set("year_min", state.minYear || String(Math.min(...vehicle.years)));
     params.set("year_max", String(Math.max(...vehicle.years)));
     params.append("makes[]", normalize(vehicle.make));
-    params.append("models[]", `${normalize(vehicle.make)}-${slug(vehicle.marketplaceModel)}`);
+    params.append("models[]", `${normalize(vehicle.make)}-${normalize(vehicle.marketplaceModel).replaceAll(" ", "_")}`);
   } else {
     params.set("keyword", query);
     if (state.minYear) params.set("year_min", state.minYear);

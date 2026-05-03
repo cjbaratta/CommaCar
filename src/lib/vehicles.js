@@ -138,6 +138,10 @@ const nonUsPatterns = [
   "taiwan",
 ];
 
+const nonUsVehicleIds = new Set([
+  "volkswagen-touran-2016",
+]);
+
 export const makes = [...new Set(commaVehicles.map((vehicle) => vehicle.make))].sort();
 
 export function capabilityFeatures(vehicle) {
@@ -195,6 +199,7 @@ function isHybrid(vehicle) {
 }
 
 function isUsMarket(vehicle) {
+  if (nonUsVehicleIds.has(vehicle.id)) return false;
   const marketText = normalize(`${vehicle.model} ${vehicle.requirement} ${vehicle.note}`);
   return !nonUsPatterns.some((pattern) => marketText.includes(normalize(pattern)));
 }
