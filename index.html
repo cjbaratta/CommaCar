@@ -3,11 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PilotCompatible</title>
+    <meta name="description" content="Find openpilot-compatible cars near you. Browse all US-market supported models, compare trim requirements, and search marketplace listings — powered by comma.ai vehicle data." />
+    <meta name="theme-color" content="#0d4a5a" />
+    <title>PilotCompatible — Find openpilot-ready cars near you</title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
     <main id="app"></main>
     <script type="module" src="./src/app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js');
+        });
+      }
+    </script>
   </body>
 </html>

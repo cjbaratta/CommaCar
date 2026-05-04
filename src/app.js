@@ -19,6 +19,8 @@ import {
   vehicles as allCompatibilityRows,
 } from "./lib/vehicles.js";
 
+const PAGE_SIZE = 24;
+
 const app = document.querySelector("#app");
 const state = {
   query: "",
@@ -36,6 +38,7 @@ const state = {
   openFilterPanels: [],
   listingText: sampleListings.join("\n"),
   onlyRecommended: false,
+  currentPage: 0,
 };
 
 let renderTimer = null;
@@ -136,6 +139,7 @@ function clearFilters() {
     hybridOnly: false,
     onlyRecommended: false,
     openFilterPanels: [],
+    currentPage: 0,
   });
   renderShell();
   renderDynamic();
@@ -340,6 +344,7 @@ function renderShell() {
           Data sourced from <a href="https://comma.ai/vehicles" target="_blank" rel="noreferrer">comma.ai/vehicles</a>, last updated May 1, 2026. Always confirm trim and package before buying.
         </div>
         <div id="vehicle-grid" class="vehicle-grid"></div>
+        <div id="pagination"></div>
       </section>
     </section>
 
@@ -355,7 +360,8 @@ function renderShell() {
         <div class="listing-controls">
           <button class="listing-toggle-btn" data-action="listing-toggle">Clear sample</button>
         </div>
-        <textarea data-bind="listingText" spellcheck="false">${h(state.listingText)}</textarea>
+        <label for="listing-textarea" class="sr-only">Paste vehicle listings to check compatibility</label>
+        <textarea id="listing-textarea" data-bind="listingText" spellcheck="false" aria-describedby="listing-count">${h(state.listingText)}</textarea>
         <div id="listing-results" class="listing-results"></div>
       </details>
     </section>
@@ -369,6 +375,29 @@ function updateFilterCounts() {
   });
   const advancedCount = app.querySelector("[data-advanced-filter-count]");
   if (advancedCount) advancedCount.textContent = advancedFilterSummary();
+}
+
+function renderPagination(currentPage, totalPages) {
+  const prev = currentPage > 0;
+  const next = currentPage < totalPages - 1;
+  const pageButtons = Array.from({ length: totalPages }, (_, i) => {
+    const isCurrent = i === currentPage;
+    return `<button
+      class="page-btn${isCurrent ? " page-btn--current" : ""}"
+      data-action="goto-page"
+      data-page="${i}"
+      aria-label="Page ${i + 1}"
+      ${isCurrent ? 'aria-current="page"' : ""}
+    >${i + 1}</button>`;
+  }).join("");
+  return `
+    <nav class="pagination" aria-label="Vehicle results pages">
+      <button class="page-btn page-nav" data-action="goto-page" data-page="${currentPage - 1}"
+        ${!prev ? "disabled" : ""} aria-label="Previous page">&#8592; Prev</button>
+      <div class="page-numbers" role="list">${pageButtons}</div>
+      <button class="page-btn page-nav" data-action="goto-page" data-page="${currentPage + 1}"
+        ${!next ? "disabled" : ""} aria-label="Next page">Next &#8594;</button>
+    </nav>`;
 }
 
 function renderDynamic() {
@@ -404,12 +433,25 @@ function renderDynamic() {
         <strong>No matching vehicles found.</strong>
         <span>Try clearing your search or adjusting make, year, body style, or favorites.</span>
       </div>`;
+  if (filtered.length !== state._lastFilteredCount) {
+    state.currentPage = 0;
+    state._lastFilteredCount = filtered.length;
+  }
+
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const pageStart = state.currentPage * PAGE_SIZE;
+  const pageVehicles = filtered.slice(pageStart, pageStart + PAGE_SIZE);
+
   app.querySelector("#vehicle-grid").innerHTML = filtered.length
-    ? filtered.map((vehicle) => vehicleCard(vehicle, safeState)).join("")
+    ? pageVehicles.map((vehicle) => vehicleCard(vehicle, safeState)).join("")
     : `<div class="empty-state">
         <strong>No compatible vehicles match your filters.</strong>
         <span>Try clearing your search, adjusting the make filter, or turning off Comma favorites.</span>
       </div>`;
+
+  app.querySelector("#pagination").innerHTML = totalPages > 1
+    ? renderPagination(state.currentPage, totalPages)
+    : "";
   app.querySelector("#listing-count").textContent = `${matchedListings}/${analyzed.length}`;
   app.querySelector("#listing-results").innerHTML = analyzed.map(analysisRow).join("");
 
@@ -470,6 +512,12 @@ app.addEventListener("click", (event) => {
   const action = event.target.closest("[data-action]")?.dataset.action;
   if (action === "clear-filters") clearFilters();
   if (action === "listing-toggle") handleListingToggle();
+  if (action === "goto-page") {
+    const page = Number(event.target.closest("[data-page]").dataset.page);
+    state.currentPage = page;
+    renderDynamic();
+    app.querySelector("#vehicle-grid").scrollIntoView({ behavior: "instant", block: "start" });
+  }
 });
 
 app.addEventListener("toggle", (event) => {
