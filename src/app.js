@@ -281,6 +281,9 @@ function renderShell() {
         <span class="eyebrow">PilotCompatible</span>
         <h1>Find openpilot-ready cars near you.</h1>
         <p>Browse compatible US-market models, compare trim requirements, and launch marketplace searches.</p>
+        <nav class="hero-blog-nav" aria-label="Site sections">
+          <a href="/blog/" class="hero-blog-link">Guides &amp; blog &#8594;</a>
+        </nav>
       </div>
       <div class="control-panel" aria-label="Search filters">
         <label class="search main-search">Model, trim, or capability<input data-bind="query" value="${h(state.query)}" placeholder="Corolla, EV6, stop & go, 2021..." /></label>
@@ -365,6 +368,31 @@ function renderShell() {
         <div id="listing-results" class="listing-results"></div>
       </details>
     </section>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="footer-brand">
+          <span class="eyebrow">PilotCompatible</span>
+          <p>Find openpilot-compatible cars near you. Browse supported models, compare trim requirements, and launch marketplace searches.</p>
+          <p class="footer-copyright">&copy; ${new Date().getFullYear()} Skyward Design. All rights reserved.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Site map">
+          <div class="footer-nav-group">
+            <strong>Tool</strong>
+            <a href="/">Vehicle finder</a>
+            <a href="/#vehicle-grid">Supported models</a>
+            <a href="https://comma.ai/vehicles" target="_blank" rel="noreferrer">comma.ai vehicles</a>
+          </div>
+          <div class="footer-nav-group">
+            <strong>Blog</strong>
+            <a href="/blog/">All posts</a>
+            <a href="/blog/install-openpilot-toyota-corolla.html">Install guide: Toyota Corolla</a>
+            <a href="/blog/openpilot-vs-tesla-autopilot-vs-gm-super-cruise.html">openpilot vs. Autopilot vs. Super Cruise</a>
+            <a href="/blog/best-evs-under-30000-openpilot-2025.html">Best EVs under $30k (2025)</a>
+          </div>
+        </nav>
+      </div>
+    </footer>
   `;
 }
 
