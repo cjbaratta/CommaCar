@@ -1,31 +1,31 @@
 ---
 title: openpilot vs. Tesla Autopilot vs. GM Super Cruise
 date: 2026-04-15T00:00:00.000Z
-description: Feature-by-feature comparison of openpilot, Tesla Autopilot, and GM Super Cruise. Capabilities, cost, vehicle lock-in, and real-world performance.
+description: Feature-by-feature comparison of openpilot, Tesla Autopilot, and GM
+  Super Cruise. Capabilities, cost, vehicle lock-in, and real-world performance.
 category: Comparison
 readingTime: 11 min read
 ---
-
 Three driver-assistance systems dominate the conversation in 2026: Tesla Autopilot, GM Super Cruise, and openpilot. They each handle highway lane centering and adaptive cruise, but the similarities mostly end there. Cost structures, vehicle lock-in, update cadence, and community involvement differ dramatically. This guide cuts through the marketing to show you what each system actually delivers.
 
 ## At a Glance
 
-| Feature | openpilot | Tesla Autopilot | GM Super Cruise |
-|---|---|---|---|
-| Hardware cost | ~$1,000 (comma 3X + harness) | Included with vehicle | Included with vehicle (subscription required) |
-| Supported vehicles | 333+ models across 30+ brands | Tesla only | Select GM vehicles (Cadillac, Chevy, GMC) |
-| Lane centering (highway) | Yes | Yes | Yes (mapped roads only) |
-| Automatic lane changes | Yes (turn signal triggered) | Yes (with confirmation) | Yes (with confirmation) |
-| Stop-and-go traffic | Yes (most supported cars) | Yes | Yes |
-| Urban street support | Experimental (select cars) | FSD (additional cost) | No |
-| Driver monitoring | Camera-based (built into comma 3X) | Steering torque detection | Infrared eye-tracking (required) |
-| OTA updates | Frequent (open-source releases) | Frequent | Periodic |
-| Open source | Yes | No | No |
-| Subscription fee | None (one-time hardware cost) | FSD: ~$99/mo or ~$8,000 purchase | ~$25/mo after trial |
+| Feature                  | openpilot                         | Tesla Autopilot                    | GM Super Cruise                               |
+| ------------------------ | --------------------------------- | ---------------------------------- | --------------------------------------------- |
+| Hardware cost            | ~$1,000 (comma 4 + harness)       | Included with vehicle              | Included with vehicle (subscription required) |
+| Supported vehicles       | 333+ models across 30+ brands     | Tesla only                         | Select GM vehicles (Cadillac, Chevy, GMC)     |
+| Lane centering (highway) | Yes                               | Yes                                | Yes (mapped roads only)                       |
+| Automatic lane changes   | Yes (turn signal triggered)       | Yes (with confirmation)            | Yes (with confirmation)                       |
+| Stop-and-go traffic      | Yes (most supported cars)         | Yes                                | Yes                                           |
+| Urban street support     | Experimental (select cars)        | FSD (additional cost)              | No                                            |
+| Driver monitoring        | Camera-based (built into comma 4) | Steering torque detection          | Infrared eye-tracking (required)              |
+| OTA updates              | Frequent (open-source releases)   | Frequent                           | Periodic                                      |
+| Open source              | Yes                               | No                                 | No                                            |
+| Subscription fee         | None (one-time hardware cost)     | FSD: \~$99/mo or \~$8,000 purchase | ~$25/mo after trial                           |
 
 ## openpilot
 
-openpilot is open-source driver-assistance software developed by Comma.ai and maintained by a large community of contributors. It runs on the comma 3X device, which you install yourself in your existing car — no new vehicle required.
+openpilot is open-source driver-assistance software developed by Comma.ai and maintained by a large community of contributors. It runs on the comma 4 device, which you install yourself in your existing car — no new vehicle required.
 
 ### What it does well
 
@@ -33,7 +33,7 @@ The biggest advantage of openpilot is **flexibility**. You can install it on ove
 
 Because it's open source, openpilot receives contributions from a global community of engineers. Improvements ship frequently, and users can tune the system's behavior using community forks like *sunnypilot* or *FrogPilot* for capabilities beyond the stock release.
 
-The comma 3X includes camera-based driver monitoring — the system watches whether your eyes are on the road and alerts you if attention lapses. This is more robust than steering-torque detection used by many OEM systems.
+The comma 4 includes camera-based driver monitoring — the system watches whether your eyes are on the road and alerts you if attention lapses. This is more robust than steering-torque detection used by many OEM systems.
 
 ### Limitations
 
@@ -67,9 +67,9 @@ The map dependency is a hard constraint — Super Cruise simply won't engage off
 
 The right choice depends on what you're optimizing for:
 
-- **You already own a compatible non-Tesla car** → openpilot is the obvious choice. ~$1,000 one-time cost, no subscription, and you keep your existing vehicle.
-- **You're buying a new car and want the best integrated experience** → Tesla FSD or Super Cruise (on the right routes) lead the field, but both have meaningful ongoing costs.
-- **You do a lot of interstate driving on mapped roads** → Super Cruise's genuine hands-free capability is compelling if you're purchasing a GM vehicle anyway.
-- **You want open-source flexibility and a growing ecosystem** → openpilot is unmatched. The community forks and frequent updates mean the system keeps improving at a pace OEM systems rarely match.
+* **You already own a compatible non-Tesla car** → openpilot is the obvious choice. ~$1,000 one-time cost, no subscription, and you keep your existing vehicle.
+* **You're buying a new car and want the best integrated experience** → Tesla FSD or Super Cruise (on the right routes) lead the field, but both have meaningful ongoing costs.
+* **You do a lot of interstate driving on mapped roads** → Super Cruise's genuine hands-free capability is compelling if you're purchasing a GM vehicle anyway.
+* **You want open-source flexibility and a growing ecosystem** → openpilot is unmatched. The community forks and frequent updates mean the system keeps improving at a pace OEM systems rarely match.
 
 > **Shopping for an openpilot-compatible car?** The [PilotCompatible vehicle finder](/) lists all 333+ supported models with harness details, trim requirements, and direct links to marketplace listings. Filter by make, year, or capability to find the right match.
