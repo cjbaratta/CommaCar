@@ -4,9 +4,7 @@ date: 2026-05-05T10:36:00.000-05:00
 category: Guide
 readingTime: 5 min read
 ---
-![A car speeding down a sunny street](/images/uploads/pexels-vahapdmr-11093289.jpg)
-
-
+![Dynamic capture of a gray sedan speeding down a city street with motion blur effect](/images/uploads/pexels-vahapdmr-size.jpg)
 
 If you are shopping for a used car specifically to run **openpilot**, the best choice is not always the newest car or the car with the flashiest factory driver-assist system. The sweet spot is usually a car that is already well-supported, easy to find used, and equipped with the right factory safety package.
 
