@@ -3,7 +3,7 @@ title: "Why Your Car Might Not Work With openpilot: A Friendly Guide to Compatib
 date: 2026-05-01T17:38:00.000-05:00
 description: A tour of the six main reasons cars get left out of openpilot
 category: Guide
-readingTime: 5 min read
+readingTime: 8 min read
 ---
 openpilot, the open-source advanced driver-assistance system (ADAS) maintained by comma.ai, currently runs on more than 300 supported car models and has been favorably reviewed for delivering a more "natural" driving experience than many factory ADAS systems. But if you have ever skimmed comma's compatibility list and noticed your car missing — or only some trims and model years included — you have probably wondered why. The short answer is that openpilot is essentially a polite hijacker: it talks to the same computers that your factory lane-keep and cruise systems use. If those computers do not exist, do not speak the same language, or are locked behind a digital deadbolt, openpilot cannot do its job. Below is a tour of the six main reasons cars get left off the list.
 
