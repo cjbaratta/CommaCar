@@ -293,8 +293,8 @@ textarea {
 
 .target-card-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 6px;
   align-items: start;
 }
 
@@ -662,7 +662,7 @@ details .listing-results {
 }
 
 .target-card-head .inline-badges {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .ev-badge {
@@ -934,14 +934,6 @@ dd {
 
   .hero p {
     font-size: 0.96rem;
-  }
-
-  .target-card-head {
-    grid-template-columns: 1fr;
-  }
-
-  .target-card-head .inline-badges {
-    justify-content: flex-start;
   }
 
   .vehicle-grid {
