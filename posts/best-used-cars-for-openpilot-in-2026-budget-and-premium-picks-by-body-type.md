@@ -4,7 +4,7 @@ date: 2026-05-05T10:36:00.000-05:00
 description: Some of the best used openpilot-friendly cars to shop for in 2026,
   broken down by body type and budget
 category: Guide
-readingTime: 5 min read
+readingTime: 8 min read
 ---
 If you are shopping for a used car specifically to run **openpilot**, the best choice is not always the newest car or the car with the flashiest factory driver-assist system. The sweet spot is usually a car that is already well-supported, easy to find used, and equipped with the right factory safety package.
 
