@@ -1435,3 +1435,30 @@ dd {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Markdown-rendered post body extras ─────────────────────────────────── */
+
+/* Blockquotes from Markdown styled as callout boxes (replaces <aside class="post-callout">) */
+.post-body blockquote {
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.post-body blockquote p {
+  margin: 0;
+}
+
+/* Post not found message */
+.post-not-found {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--muted);
+  font-size: 1rem;
+}
+.post-not-found a {
+  color: var(--accent);
+}

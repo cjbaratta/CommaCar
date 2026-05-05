@@ -24,8 +24,15 @@
 
 # Optional: hide common backend guesses if your app has no API
 /api/*                        /404.html   404
-/admin/*                      /404.html   404
 /login                        /404.html   404
+
+# 301: old static post URLs → clean URLs (SEO preservation)
+/blog/install-openpilot-toyota-corolla.html              /blog/install-openpilot-toyota-corolla              301
+/blog/openpilot-vs-tesla-autopilot-vs-gm-super-cruise.html  /blog/openpilot-vs-tesla-autopilot-vs-gm-super-cruise  301
+/blog/best-evs-under-30000-openpilot-2025.html           /blog/best-evs-under-30000-openpilot-2025           301
+
+# Rewrite: clean blog post URLs → dynamic post renderer
+/blog/:slug                   /blog/post.html             200
 
 # SPA fallback — keep last
 /*                            /index.html 200

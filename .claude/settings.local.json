@@ -19,7 +19,8 @@
       "mcp__Claude_in_Chrome__read_console_messages",
       "WebFetch(domain:www.autotrader.com)",
       "WebFetch(domain:www.cars.com)",
-      "Bash(pkill -f \"vite --host 127.0.0.1\")"
+      "Bash(pkill -f \"vite --host 127.0.0.1\")",
+      "Bash(npm install *)"
     ]
   }
 }
