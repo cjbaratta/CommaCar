@@ -1,5 +1,32 @@
-import matter from 'gray-matter';
 import { marked } from 'marked';
+
+/**
+ * Parse YAML-style frontmatter from a raw markdown string.
+ * Handles the simple key: value pairs used in our blog posts.
+ * Replaces gray-matter, which requires Node.js Buffer (not available in browsers).
+ */
+function parseFrontmatter(raw) {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  if (!match) return { data: {}, content: raw };
+
+  const data = {};
+  for (const line of match[1].split('\n')) {
+    const colonIdx = line.indexOf(':');
+    if (colonIdx === -1) continue;
+    const key = line.slice(0, colonIdx).trim();
+    let value = line.slice(colonIdx + 1).trim();
+    // Strip surrounding quotes
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    data[key] = value;
+  }
+
+  return { data, content: match[2].trim() };
+}
 
 // Lazy glob — only the requested post's markdown is loaded
 const postFiles = import.meta.glob('/posts/*.md', { query: '?raw', import: 'default' });
@@ -15,7 +42,7 @@ if (!loader) {
     '<p class="post-not-found">Post not found. <a href="/blog/">← All posts</a></p>';
 } else {
   loader().then(raw => {
-    const { data, content } = matter(raw);
+    const { data, content } = parseFrontmatter(raw);
 
     // Update page metadata
     document.title = `${data.title} — PilotCompatible`;

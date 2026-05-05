@@ -20,7 +20,11 @@
       "WebFetch(domain:www.autotrader.com)",
       "WebFetch(domain:www.cars.com)",
       "Bash(pkill -f \"vite --host 127.0.0.1\")",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(curl -s http://127.0.0.1:5174/blog/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:5174/blog/install-openpilot-toyota-corolla)",
+      "Bash(kill %1)",
+      "Bash(pkill -f \"vite.*5174\")"
     ]
   }
 }
