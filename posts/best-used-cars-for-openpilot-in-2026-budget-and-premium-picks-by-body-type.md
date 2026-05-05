@@ -1,11 +1,11 @@
 ---
 title: "Best Used Cars for openpilot in 2026: Budget and Premium Picks by Body Type"
 date: 2026-05-05T10:36:00.000-05:00
+description: Some of the best used openpilot-friendly cars to shop for in 2026,
+  broken down by body type and budget
 category: Guide
 readingTime: 5 min read
 ---
-![Dynamic capture of a gray sedan speeding down a city street with motion blur effect](/images/uploads/pexels-vahapdmr-size.jpg)
-
 If you are shopping for a used car specifically to run **openpilot**, the best choice is not always the newest car or the car with the flashiest factory driver-assist system. The sweet spot is usually a car that is already well-supported, easy to find used, and equipped with the right factory safety package.
 
 As of May 2026, comma’s official supported-cars list says openpilot supports **333 vehicles**, and comma describes a supported vehicle as one that “just works” when you install a comma device. That said, compatibility can depend on year, trim, market, and factory options, so always verify the exact year and package before buying.\
