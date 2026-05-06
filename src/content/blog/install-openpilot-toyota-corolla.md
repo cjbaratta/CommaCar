@@ -1,10 +1,12 @@
 ---
 title: How to Install openpilot on a Toyota Corolla
 date: 2026-05-01T00:00:00.000Z
-description: Step-by-step guide to installing openpilot on a Toyota Corolla. Covers hardware, harness selection, mounting, software setup, and first-drive calibration.
+description: 'Step-by-step guide to installing openpilot on a Toyota Corolla. Covers hardware, harness selection, mounting, software setup, and first-drive calibration.'
 category: Installation
 readingTime: 8 min read
 ---
+
+![](/images/uploads/pexels-vahapdmr-size.jpg)
 
 The Toyota Corolla is one of the most popular openpilot platforms — it's widely available, affordable, and supported across a broad range of model years (2020–2022 with TSS-P, and 2023+ with the updated package). This guide walks you through everything you need to go from a stock Corolla to a fully operational openpilot installation.
 
@@ -14,11 +16,11 @@ The Toyota Corolla is one of the most popular openpilot platforms — it's widel
 
 Before you start, gather the following hardware:
 
-- **comma 3X** — the current flagship device from Comma.ai. Available at [comma.ai/shop](https://comma.ai/shop).
-- **Toyota Nidec harness** — required for 2020–2022 Corollas with TSS 2.0. The harness plugs inline with the existing LKAS camera connector; no cutting or splicing needed.
-- **Mount** — an angled mount designed for the comma 3X. Comma sells an official mount that clips to the windshield near the rearview mirror.
-- **USB-C cable** (included with comma 3X) for charging and data.
-- **Small flathead screwdriver** for releasing the camera connector clip.
+* **comma 3X** — the current flagship device from Comma.ai. Available at [comma.ai/shop](https://comma.ai/shop).
+* **Toyota Nidec harness** — required for 2020–2022 Corollas with TSS 2.0. The harness plugs inline with the existing LKAS camera connector; no cutting or splicing needed.
+* **Mount** — an angled mount designed for the comma 3X. Comma sells an official mount that clips to the windshield near the rearview mirror.
+* **USB-C cable** (included with comma 3X) for charging and data.
+* **Small flathead screwdriver** for releasing the camera connector clip.
 
 ## Step 1 — Verify Your Trim and Package
 
@@ -30,10 +32,10 @@ The LE, SE, XLE, and XSE trims on 2020+ Corollas all include TSS 2.0 as standard
 
 Order the comma 3X and the Toyota Nidec harness together from the Comma shop. Shipping is typically 2–4 business days within the US. In the box you'll find:
 
-- comma 3X unit
-- USB-C charging cable
-- Windshield mount
-- Quick-start card
+* comma 3X unit
+* USB-C charging cable
+* Windshield mount
+* Quick-start card
 
 The harness ships separately as a coiled cable with two OBD-style connectors.
 
@@ -63,18 +65,18 @@ During setup you'll be asked to confirm your car make, model, and year. Select *
 
 openpilot must calibrate its camera before full features become available. This typically takes 15–25 miles of highway driving. A progress bar appears on the comma 3X screen. During calibration:
 
-- Drive on a straight highway if possible — lane markings help calibration converge faster.
-- Avoid tunnels and heavy rain, which obscure lane lines.
-- You can use openpilot during calibration, but some features may be limited until it completes.
+* Drive on a straight highway if possible — lane markings help calibration converge faster.
+* Avoid tunnels and heavy rain, which obscure lane lines.
+* You can use openpilot during calibration, but some features may be limited until it completes.
 
 Once calibration finishes you'll get a confirmation on-screen. From this point, all features — lane centering, adaptive cruise, and automatic lane changes — are fully active.
 
 ## Safety Tips
 
-- **Keep your hands on the wheel.** openpilot is a driver-assistance system, not autonomous driving. You must remain attentive and ready to take control at any moment.
-- **Learn the disengagement cues.** The system disengages if you press the brake, turn the steering wheel too forcefully, or if road conditions exceed its capabilities. A distinct alert sounds when this happens.
-- **Test on familiar roads first.** Get comfortable with how the system feels on a route you know well before using it in unfamiliar territory.
-- **Keep firmware updated.** Comma releases regular openpilot updates with improvements and bug fixes. The device downloads and installs updates automatically when parked and on Wi-Fi.
+* **Keep your hands on the wheel.** openpilot is a driver-assistance system, not autonomous driving. You must remain attentive and ready to take control at any moment.
+* **Learn the disengagement cues.** The system disengages if you press the brake, turn the steering wheel too forcefully, or if road conditions exceed its capabilities. A distinct alert sounds when this happens.
+* **Test on familiar roads first.** Get comfortable with how the system feels on a route you know well before using it in unfamiliar territory.
+* **Keep firmware updated.** Comma releases regular openpilot updates with improvements and bug fixes. The device downloads and installs updates automatically when parked and on Wi-Fi.
 
 ## Troubleshooting Common Issues
 
