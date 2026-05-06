@@ -8,7 +8,8 @@ export function searchTextFor(vehicle, state) {
 }
 
 function siteSearchUrl(site, query, state) {
-  const scopedQuery = encodeURIComponent(`${site} ${query} ${state.zip}`);
+  const location = state.zip ? ` ${state.zip}` : "";
+  const scopedQuery = encodeURIComponent(`${site} ${query}${location}`);
   return `https://www.google.com/search?q=${scopedQuery}`;
 }
 
@@ -17,11 +18,13 @@ function autotraderUrl(vehicle, state) {
   const pricePath = state.maxPrice ? `/cars-under-${encodeURIComponent(state.maxPrice)}` : "";
   const locationPath = state.zip ? `/${encodeURIComponent(state.zip)}` : "";
   const params = new URLSearchParams({
-    searchRadius: state.radius,
     startYear: state.minYear || String(Math.min(...vehicle.years)),
     endYear: String(Math.max(...vehicle.years)),
-    zip: state.zip,
   });
+  if (state.zip) {
+    params.set("searchRadius", state.radius);
+    params.set("zip", state.zip);
+  }
 
   return `https://www.autotrader.com/cars-for-sale/all-cars${pricePath}/${slug(vehicle.make)}/${slug(vehicle.marketplaceModel)}${locationPath}?${params.toString()}`;
 }
@@ -33,9 +36,11 @@ function autonationUrl(vehicle, state) {
     md: `${normalize(vehicle.make)}^^^${normalize(vehicle.marketplaceModel)}`,
     yr: `${state.minYear || Math.min(...vehicle.years)}|${Math.max(...vehicle.years)}`,
     pmn: "0",
-    dst: state.radius,
-    zip: state.zip,
   });
+  if (state.zip) {
+    params.set("dst", state.radius);
+    params.set("zip", state.zip);
+  }
 
   if (state.maxPrice) params.set("pmx", state.maxPrice);
   if (["SUV / crossover / van", "Sedan / hatchback", "Truck"].includes(state.bodyStyle)) {
@@ -51,11 +56,13 @@ function autolistUrl(vehicle, state) {
     "makes[]": vehicle.make,
     "models[]": vehicle.marketplaceModel,
     page: "1",
-    radius: state.radius,
-    zip: state.zip,
     year_min: state.minYear || String(Math.min(...vehicle.years)),
     year_max: String(Math.max(...vehicle.years)),
   });
+  if (state.zip) {
+    params.set("radius", state.radius);
+    params.set("zip", state.zip);
+  }
 
   params.append(`make_models[${vehicle.make}][]`, vehicle.marketplaceModel);
   if (state.maxPrice) params.set("price_max", state.maxPrice);
@@ -67,11 +74,11 @@ function autolistUrl(vehicle, state) {
 }
 
 function carsComUrl(vehicle, query, state) {
-  const params = new URLSearchParams({
-    maximum_distance: state.radius,
-    zip: state.zip,
-    sort: "listed_at_desc",
-  });
+  const params = new URLSearchParams({ sort: "listed_at_desc" });
+  if (state.zip) {
+    params.set("maximum_distance", state.radius);
+    params.set("zip", state.zip);
+  }
 
   if (vehicle) {
     params.set("year_min", state.minYear || String(Math.min(...vehicle.years)));

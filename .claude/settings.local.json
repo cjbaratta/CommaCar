@@ -24,7 +24,10 @@
       "Bash(curl -s http://127.0.0.1:5174/blog/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:5174/blog/install-openpilot-toyota-corolla)",
       "Bash(kill %1)",
-      "Bash(pkill -f \"vite.*5174\")"
+      "Bash(pkill -f \"vite.*5174\")",
+      "Bash(curl -s http://127.0.0.1:5173/)",
+      "Bash(node -e ' *)",
+      "Bash(node --input-type=module)"
     ]
   }
 }

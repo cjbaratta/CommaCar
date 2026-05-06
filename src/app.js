@@ -25,7 +25,7 @@ const app = document.querySelector("#app");
 const state = {
   query: "",
   make: "All",
-  zip: "60601",
+  zip: "",
   radius: "100",
   minYear: "",
   maxPrice: "",
@@ -166,8 +166,14 @@ function actionSection(label, links, className = "") {
 
 function featureChips(vehicle) {
   return `<div class="feature-chips">${capabilityFeatures(vehicle)
+    .filter(([label]) => label !== "Turns")
     .map(([label, value]) => `<span class="feature-chip"><strong>${h(label)}</strong>${h(value)}</span>`)
     .join("")}</div>`;
+}
+
+function limitedTurnsNotice(vehicle) {
+  if (!vehicle.features.some(([label]) => label === "Turns")) return "";
+  return `<div class="notice turns-notice">openpilot may not handle tight turns on this vehicle — verify before buying.</div>`;
 }
 
 function marketBadges(vehicle) {
@@ -197,6 +203,7 @@ function vehicleCard(vehicle, safeState) {
         <div><dt>Harness</dt><dd>${h(vehicle.harness)}</dd></div>
       </dl>
       ${vehicle.note ? `<div class="notice">${h(vehicle.note)}</div>` : ""}
+      ${limitedTurnsNotice(vehicle)}
       <div class="card-actions">
         ${actionSection("Listings", marketplaceLinks(vehicle, safeState), "marketplace-section")}
         <details class="card-more">
@@ -239,7 +246,8 @@ function searchTargetCard(vehicle, safeState) {
       </div>
       <p>${h(vehicle.requirement)}</p>
       ${featureChips(vehicle)}
-      <div class="link-group target-actions">${marketplaceLinks(vehicle, safeState).slice(0, 3).map(sourceButton).join("")}</div>
+      ${limitedTurnsNotice(vehicle)}
+      <div class="link-group target-actions">${marketplaceLinks(vehicle, safeState).slice(0, 4).map(sourceButton).join("")}</div>
       <details class="card-more target-more">
         <summary>Research links</summary>
         <div class="link-group muted-links">${reviewLinks(vehicle).slice(0, 2).map(sourceButton).join("")}</div>
@@ -281,13 +289,14 @@ function renderShell() {
         <span class="eyebrow">PilotCompatible</span>
         <h1>Find openpilot-ready cars near you.</h1>
         <p>Browse compatible US-market models, compare trim requirements, and launch marketplace searches.</p>
+        <p class="hero-explainer">openpilot is an open-source driver assistance system by <a href="https://comma.ai" target="_blank" rel="noreferrer" class="hero-link">comma.ai</a> — like Autopilot, but for non-Tesla vehicles.</p>
         <nav class="hero-blog-nav" aria-label="Site sections">
           <a href="/blog/" class="hero-blog-link">Guides &amp; blog &#8594;</a>
         </nav>
       </div>
       <div class="control-panel" aria-label="Search filters">
         <label class="search main-search">Model, trim, or capability<input data-bind="query" value="${h(state.query)}" placeholder="Corolla, EV6, stop & go, 2021..." /></label>
-        <label>ZIP code<input data-bind="zip" value="${h(state.zip)}" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-describedby="zip-help" /></label>
+        <label>ZIP code<input data-bind="zip" value="${h(state.zip)}" inputmode="numeric" pattern="[0-9]*" maxlength="5" placeholder="e.g. 90210" aria-describedby="zip-help" /></label>
         <label>Radius<input data-bind="radius" value="${h(state.radius)}" inputmode="numeric" pattern="[0-9]*" aria-describedby="radius-help" /></label>
         <label>Make<select data-bind="make">${optionList(["All", ...makes], state.make)}</select></label>
         <label>Body style<select data-bind="bodyStyle">${optionList(bodyStyles, state.bodyStyle)}</select></label>
@@ -459,7 +468,7 @@ function renderDynamic() {
     ? targetVehicles.map((vehicle) => searchTargetCard(vehicle, safeState)).join("")
     : `<div class="empty-state">
         <strong>No matching vehicles found.</strong>
-        <span>Try clearing your search or adjusting make, year, body style, or favorites.</span>
+        <span>Try adjusting your make, year, or body style, or <button class="empty-state-clear" data-action="clear-filters">clear all filters</button>.</span>
       </div>`;
   if (filtered.length !== state._lastFilteredCount) {
     state.currentPage = 0;
@@ -474,7 +483,7 @@ function renderDynamic() {
     ? pageVehicles.map((vehicle) => vehicleCard(vehicle, safeState)).join("")
     : `<div class="empty-state">
         <strong>No compatible vehicles match your filters.</strong>
-        <span>Try clearing your search, adjusting the make filter, or turning off Comma favorites.</span>
+        <span>Try adjusting the make, year, or body style, or <button class="empty-state-clear" data-action="clear-filters">clear all filters</button>.</span>
       </div>`;
 
   app.querySelector("#pagination").innerHTML = totalPages > 1
@@ -487,6 +496,9 @@ function renderDynamic() {
     const zone = app.querySelector(lostFocusZone);
     zone?.querySelector('a, button, [tabindex="0"]')?.focus();
   }
+
+  const qs = stateToParams().toString();
+  history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
 }
 
 function scheduleRender() {
@@ -509,6 +521,42 @@ function syncInputValue(element, key) {
   }
 }
 
+function stateToParams() {
+  const p = new URLSearchParams();
+  if (state.query)                   p.set("q",        state.query);
+  if (state.make !== "All")          p.set("make",     state.make);
+  if (state.zip)                     p.set("zip",      state.zip);
+  if (state.radius !== "100")        p.set("r",        state.radius);
+  if (state.minYear)                 p.set("minYear",  state.minYear);
+  if (state.maxPrice)                p.set("maxPrice", state.maxPrice);
+  if (state.bodyStyle !== "Any")     p.set("body",     state.bodyStyle);
+  if (state.alcFilters.length)       p.set("alc",      state.alcFilters.join(","));
+  if (state.accFilters.length)       p.set("acc",      state.accFilters.join(","));
+  if (state.supportFilters.length)   p.set("sup",      state.supportFilters.join(","));
+  if (state.evOnly)                  p.set("ev",       "1");
+  if (state.hybridOnly)              p.set("hybrid",   "1");
+  if (state.onlyRecommended)         p.set("fav",      "1");
+  return p;
+}
+
+function paramsToState() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.has("q"))        state.query           = p.get("q");
+  if (p.has("make"))     state.make            = p.get("make");
+  if (p.has("zip"))      state.zip             = p.get("zip");
+  if (p.has("r"))        state.radius          = p.get("r");
+  if (p.has("minYear"))  state.minYear         = p.get("minYear");
+  if (p.has("maxPrice")) state.maxPrice        = p.get("maxPrice");
+  if (p.has("body"))     state.bodyStyle       = p.get("body");
+  if (p.has("alc"))      state.alcFilters      = p.get("alc").split(",");
+  if (p.has("acc"))      state.accFilters      = p.get("acc").split(",");
+  if (p.has("sup"))      state.supportFilters  = p.get("sup").split(",");
+  if (p.has("ev"))       state.evOnly          = true;
+  if (p.has("hybrid"))   state.hybridOnly      = true;
+  if (p.has("fav"))      state.onlyRecommended = true;
+}
+
+paramsToState();
 renderShell();
 renderDynamic();
 

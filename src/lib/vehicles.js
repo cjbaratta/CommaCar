@@ -258,7 +258,6 @@ export function matchesCapabilities(vehicle, state) {
   const hasSupport =
     !state.supportFilters.length ||
     state.supportFilters.some((value) => {
-      if (value === "Limited turns") return vehicle.features.some(([label]) => label === "Turns");
       if (value === "Experimental lights & signs") return vehicle.features.some(([label]) => label === "Experimental");
       return false;
     });

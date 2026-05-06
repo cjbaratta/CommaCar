@@ -69,7 +69,6 @@ export const accFilterOptions = [
 ];
 
 export const supportFilterOptions = [
-    "Limited turns",
     "Experimental lights & signs",
 ];
 
