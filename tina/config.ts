@@ -11,7 +11,7 @@ export default defineConfig({
   clientId:
     process.env.NEXT_PUBLIC_TINA_CLIENT_ID ||
     "251c22a5-4c89-4e80-bba2-467a1e69a18e",
-  token: process.env.TINA_TOKEN || "local",
+  token: process.env.TINA_TOKEN || "e15ea482bd715bcfc70f7c6986ca19e1201f4a97",
   build: {
     outputFolder: "admin",
     publicFolder: "public",
