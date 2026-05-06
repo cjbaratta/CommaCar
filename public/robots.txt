@@ -2,4 +2,4 @@ User-agent: *
 
 Disallow:
 
-Sitemap: https://www.pilotcompatible.com/sitemap.xml
+Sitemap: https://www.pilotcompatible.com/sitemap-index.xml

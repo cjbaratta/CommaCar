@@ -1,0 +1,33 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogType?: "website" | "article";
+}
+
+const { title, description, canonicalUrl, ogType = "website" } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} canonicalUrl={canonicalUrl} ogType={ogType}>
+  <header class="blog-site-header">
+    <a href="/" class="blog-site-logo">
+      <span class="eyebrow">PilotCompatible</span>
+    </a>
+    <nav class="blog-nav" aria-label="Site navigation">
+      <a href="/blog/">All posts</a>
+      <a href="/">Vehicle finder</a>
+    </nav>
+  </header>
+
+  <main class="blog-main">
+    <slot />
+  </main>
+
+  <footer class="blog-footer">
+    <a href="/blog/">All posts</a>
+    <a href="/">Vehicle finder</a>
+  </footer>
+</BaseLayout>

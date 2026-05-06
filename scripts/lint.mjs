@@ -4,7 +4,8 @@ import { spawnSync } from "node:child_process";
 
 const roots = ["src", "scripts", "test"];
 const jsFiles = [];
-const textFiles = ["package.json", "index.html", "README.md"];
+const textFiles = [".gitignore", "astro.config.mjs", "netlify.toml", "package.json", "README.md", "tina/config.ts"];
+jsFiles.push("astro.config.mjs");
 
 function walk(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
@@ -14,7 +15,7 @@ function walk(directory) {
     } else if ([".js", ".mjs"].includes(extname(entry.name))) {
       jsFiles.push(path);
       textFiles.push(path);
-    } else if ([".css", ".html", ".json", ".md"].includes(extname(entry.name))) {
+    } else if ([".astro", ".css", ".html", ".json", ".md", ".ts"].includes(extname(entry.name))) {
       textFiles.push(path);
     }
   }

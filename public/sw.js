@@ -1,10 +1,9 @@
-const CACHE_NAME = 'pilotcompat-v1';
+const CACHE_NAME = 'pilotcompat-v2';
+const APP_SHELL_ASSETS = ['/', '/manifest.json', '/icons/icon.svg', '/icons/icon-maskable.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) =>
-      cache.addAll(['/', '/manifest.json', '/icons/icon.svg', '/icons/icon-maskable.svg'])
-    )
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL_ASSETS))
   );
   self.skipWaiting();
 });
@@ -25,12 +24,26 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(
     caches.open(CACHE_NAME).then(async (cache) => {
+      const requestMode = event.request.mode;
+      const isDocument = requestMode === 'navigate' || event.request.destination === 'document';
+
+      if (isDocument) {
+        try {
+          const response = await fetch(event.request);
+          if (response.ok) cache.put(event.request, response.clone());
+          return response;
+        } catch {
+          const cached = await cache.match(event.request);
+          return cached ?? cache.match('/');
+        }
+      }
+
       const cached = await cache.match(event.request);
-      const networkFetch = fetch(event.request).then((response) => {
-        if (response.ok) cache.put(event.request, response.clone());
-        return response;
-      });
-      return cached ?? networkFetch;
+      if (cached) return cached;
+
+      const response = await fetch(event.request);
+      if (response.ok) cache.put(event.request, response.clone());
+      return response;
     })
   );
 });

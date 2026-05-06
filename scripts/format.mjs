@@ -3,14 +3,14 @@ import { readdirSync } from "node:fs";
 import { extname, join } from "node:path";
 
 const roots = ["src", "scripts", "test"];
-const files = ["package.json", "index.html", "README.md"];
+const files = [".gitignore", "astro.config.mjs", "netlify.toml", "package.json", "README.md", "tina/config.ts"];
 
 function walk(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name);
     if (entry.isDirectory()) {
       walk(path);
-    } else if ([".js", ".mjs", ".css", ".html", ".json", ".md"].includes(extname(entry.name))) {
+    } else if ([".astro", ".js", ".mjs", ".css", ".html", ".json", ".md", ".ts"].includes(extname(entry.name))) {
       files.push(path);
     }
   }

@@ -395,9 +395,9 @@ function renderShell() {
           <div class="footer-nav-group">
             <strong>Blog</strong>
             <a href="/blog/">All posts</a>
-            <a href="/blog/install-openpilot-toyota-corolla.html">Install guide: Toyota Corolla</a>
-            <a href="/blog/openpilot-vs-tesla-autopilot-vs-gm-super-cruise.html">openpilot vs. Autopilot vs. Super Cruise</a>
-            <a href="/blog/best-evs-under-30000-openpilot-2025.html">Best EVs under $30k (2025)</a>
+            <a href="/blog/install-openpilot-toyota-corolla/">Install guide: Toyota Corolla</a>
+            <a href="/blog/openpilot-vs-tesla-autopilot-vs-gm-super-cruise/">openpilot vs. Autopilot vs. Super Cruise</a>
+            <a href="/blog/best-evs-under-30000-openpilot-2025/">Best EVs under $30k (2025)</a>
           </div>
         </nav>
       </div>

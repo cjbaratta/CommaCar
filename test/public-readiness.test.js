@@ -1,10 +1,29 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import { marketplaceLinks } from "../src/lib/marketplaces.js";
 import { normalizedState } from "../src/lib/state.js";
 import { escapeHtml } from "../src/lib/text.js";
 import { filterVehicles, topTargets, usVehicles, vehicles } from "../src/lib/vehicles.js";
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const distDir = path.join(repoRoot, "dist");
+const blogContentDir = path.join(repoRoot, "src", "content", "blog");
+
+function readText(...segments) {
+  return fs.readFileSync(path.join(repoRoot, ...segments), "utf8");
+}
+
+function blogSlugs() {
+  return fs
+    .readdirSync(blogContentDir)
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => file.replace(/\.md$/, ""))
+    .sort();
+}
 
 const baseState = normalizedState({
   query: "",
@@ -92,4 +111,62 @@ test("default search targets prioritize practical recommendations over data orde
 
   assert.deepEqual(targets.slice(0, 3), ["Hyundai Ioniq 5", "Kia EV6", "Toyota Prius"]);
   assert.ok(!targets[0].startsWith("Acura "));
+});
+
+test("Astro build emits static blog pages for every markdown post", () => {
+  assert.ok(fs.existsSync(path.join(distDir, "blog", "index.html")), "run npm run build before npm test");
+
+  for (const slug of blogSlugs()) {
+    assert.ok(fs.existsSync(path.join(distDir, "blog", slug, "index.html")), `missing static page for ${slug}`);
+  }
+});
+
+test("blog post HTML contains rendered content and article metadata", () => {
+  const html = readText("dist", "blog", "install-openpilot-toyota-corolla", "index.html");
+
+  assert.match(html, /<meta property="og:type" content="article">/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/www\.pilotcompatible\.com\/blog\/install-openpilot-toyota-corolla\/">/);
+  assert.match(html, /<h1>How to Install openpilot on a Toyota Corolla<\/h1>/);
+  assert.match(html, /<h2 id="what-youll-need">What You.ll Need<\/h2>/);
+  assert.match(html, /<strong>comma 3X<\/strong>/);
+});
+
+test("blog routes do not ship the finder bundle or client-side markdown renderer", () => {
+  const forbidden = [/src\/app\.js/, /data\/vehicles/, /marked/i, /post-[\w-]+\.js/, /install-openpilot-toyota-corolla-[\w-]+\.js/];
+
+  for (const slug of ["index", ...blogSlugs()]) {
+    const htmlPath =
+      slug === "index"
+        ? path.join(distDir, "blog", "index.html")
+        : path.join(distDir, "blog", slug, "index.html");
+    const html = fs.readFileSync(htmlPath, "utf8");
+
+    assert.doesNotMatch(html, /<script type="module" src="\/_astro\/[^"]+\.js"/);
+    for (const pattern of forbidden) {
+      assert.doesNotMatch(html, pattern, `${slug} includes ${pattern}`);
+    }
+  }
+
+  const astroAssets = fs.readdirSync(path.join(distDir, "_astro"));
+  assert.ok(!astroAssets.some((file) => /post-|install-openpilot|openpilot-vs|best-evs|why-your-car/.test(file)));
+});
+
+test("Tina admin and Astro sitemap are present in the built site", () => {
+  assert.ok(fs.existsSync(path.join(distDir, "admin", "index.html")));
+  assert.ok(fs.existsSync(path.join(distDir, "sitemap-index.xml")));
+  assert.ok(fs.existsSync(path.join(distDir, "sitemap-0.xml")));
+
+  const robots = readText("dist", "robots.txt");
+  const sitemap = readText("dist", "sitemap-0.xml");
+  assert.match(robots, /Sitemap: https:\/\/www\.pilotcompatible\.com\/sitemap-index\.xml/);
+  assert.match(sitemap, /https:\/\/www\.pilotcompatible\.com\/blog\/install-openpilot-toyota-corolla\//);
+});
+
+test("Netlify keeps legacy redirects without SPA or dynamic blog rewrites", () => {
+  const config = readText("netlify.toml");
+
+  assert.match(config, /from = "\/blog\/install-openpilot-toyota-corolla\.html"\s+to = "\/blog\/install-openpilot-toyota-corolla\/"\s+status = 301/s);
+  assert.match(config, /from = "\/sitemap\.xml"\s+to = "\/sitemap-index\.xml"\s+status = 301/s);
+  assert.doesNotMatch(config, /\/blog\/:slug/);
+  assert.doesNotMatch(config, /from = "\/\*"\s+to = "\/index\.html"\s+status = 200/s);
 });

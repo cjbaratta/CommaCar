@@ -50,9 +50,9 @@ The **2020–2022 Toyota Corolla** is one of the easiest used openpilot recommen
 
 Used prices are also still reasonable. Kelley Blue Book lists 2020 Corolla pricing starting around **$14,500** for a Corolla L sedan and around **$16,200** for an SE sedan, with higher trims costing more.
 
-Sources:  
+Sources:
 
-* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)  
+* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)
 * [Kelley Blue Book: 2020 Toyota Corolla](https://www.kbb.com/toyota/corolla/2020/)
 
 ### Why it is a good pick
@@ -105,9 +105,9 @@ For a more proven long-term ownership choice, the **2021–2024 Toyota Camry Hyb
 
 Kelley Blue Book lists 2021 Camry pricing starting around **$19,050** for the LE sedan and around **$19,800** for the SE, with higher trims costing more.
 
-Sources:  
+Sources:
 
-* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)  
+* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)
 * [Kelley Blue Book: 2021 Toyota Camry](https://www.kbb.com/toyota/camry/2021/)
 
 ### Why it is a good pick
@@ -144,9 +144,9 @@ The newer **Honda CR-V** is one of the better higher-budget used SUV choices for
 
 Kelley Blue Book used listings for the 2023 CR-V show many examples in the mid-to-low $30,000s for hybrid and EX-L/Sport trims, with some higher-mileage LX examples lower.
 
-Sources:  
+Sources:
 
-* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)  
+* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)
 * [Kelley Blue Book: Used 2023 Honda CR-V Listings](https://www.kbb.com/cars-for-sale/used/2023/honda/cr-v)
 
 ### Why it is a good pick
@@ -235,9 +235,9 @@ For an affordable EV with openpilot support, the **2022–2023 Chevy Bolt EUV Pr
 
 Kelley Blue Book private-party values for a 2022 Bolt EUV Premier show roughly **$15,720 to $17,920** depending on condition, while current KBB used listings show many dealer examples around the high teens to low $20,000s.
 
-Sources:  
+Sources:
 
-* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)  
+* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)
 * [Kelley Blue Book: 2022 Chevrolet Bolt EUV Premier](https://www.kbb.com/chevrolet/bolt-euv/2022/premier-hatchback-4d/)
 
 ### Why it is a good pick
@@ -256,9 +256,9 @@ If you want the EV that feels more modern and road-trip capable, the **Hyundai I
 
 Kelley Blue Book listings for lightly used 2026 Ioniq 5 SEL examples show prices in the low-to-mid $30,000s, while older 2022–2024 used examples will generally be the more relevant openpilot-shopping target.
 
-Sources:  
+Sources:
 
-* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)  
+* [comma.ai Supported Cars](https://docs.comma.ai/CARS/)
 * [Kelley Blue Book: Used Hyundai Ioniq 5 Listings](https://www.kbb.com/cars-for-sale/used/2026/hyundai/ioniq-5/sel)
 
 ### Why it is a good pick

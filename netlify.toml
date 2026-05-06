@@ -1,3 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
 # Security headers for all pages/assets Netlify serves
 [[headers]]
   for = "/*"
@@ -10,9 +14,9 @@
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Resource-Policy = "same-origin"
 
-# Cache Vite hashed assets aggressively
+# Cache Astro hashed assets aggressively
 [[headers]]
-  for = "/assets/*"
+  for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
@@ -33,8 +37,145 @@
   [headers.values]
     Cache-Control = "public, max-age=3600"
 
-# Allow Netlify Identity OAuth popup to communicate with opener
+[[headers]]
+  for = "/sitemap-index.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Allow the Tina admin auth popup to communicate with its opener.
 [[headers]]
   for = "/admin/*"
   [headers.values]
     Cross-Origin-Opener-Policy = "same-origin-allow-popups"
+
+# Block common CMS / credential / scanner probes
+[[redirects]]
+  from = "/wp-login.php"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/xmlrpc.php"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/wp-admin/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/wp-content/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/wp-includes/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/wordpress/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/wp/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/.env"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/.env.*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/.git/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/.svn/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/.hg/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/.DS_Store"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/composer.json"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/composer.lock"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/yarn.lock"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/pnpm-lock.yaml"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/server-status"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/phpinfo.php"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/api/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/login"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
+# Old static post URLs to clean Astro routes.
+[[redirects]]
+  from = "/blog/install-openpilot-toyota-corolla.html"
+  to = "/blog/install-openpilot-toyota-corolla/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/openpilot-vs-tesla-autopilot-vs-gm-super-cruise.html"
+  to = "/blog/openpilot-vs-tesla-autopilot-vs-gm-super-cruise/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/best-evs-under-30000-openpilot-2025.html"
+  to = "/blog/best-evs-under-30000-openpilot-2025/"
+  status = 301

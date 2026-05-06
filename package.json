@@ -5,15 +5,17 @@
   "type": "module",
   "scripts": {
     "build:data": "node scripts/build-vehicles-data.mjs /tmp/comma-vehicles.html",
-    "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "dev": "tinacms dev -c \"astro dev --host 127.0.0.1\"",
+    "dev:astro": "astro dev --host 127.0.0.1",
+    "build": "tinacms build --content=local --skip-cloud-checks --skip-indexing && astro build",
     "lint": "node scripts/lint.mjs",
     "format": "node scripts/format.mjs",
     "test": "node --test"
   },
-  "dependencies": {
-    "gray-matter": "^4.0.3",
-    "marked": "^18.0.3",
-    "vite": "^7.0.0"
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "@tinacms/cli": "^2.2.5",
+    "astro": "^6.2.2",
+    "tinacms": "^3.7.5"
   }
 }

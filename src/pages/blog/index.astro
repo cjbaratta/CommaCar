@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+});
+---
+
+<BlogLayout
+  title="Blog — PilotCompatible"
+  description="openpilot installation guides, comparisons, and buyer's guides from the PilotCompatible team."
+  canonicalUrl="https://www.pilotcompatible.com/blog/"
+>
+  <div class="blog-hero">
+    <span class="eyebrow">Blog</span>
+    <h1>openpilot Guides &amp; Resources</h1>
+    <p>Installation walkthroughs, comparisons, and buyer's guides to help you get the most out of openpilot.</p>
+  </div>
+
+  <div class="blog-listing">
+    {
+      posts.map((post) => (
+        <article class="post-card">
+          <a href={`/blog/${post.id}/`} class="post-card-link">
+            <div class="post-card-meta">
+              <span class="post-category">{post.data.category}</span>
+              <span class="post-reading-time">{post.data.readingTime}</span>
+            </div>
+            <h2 class="post-card-title">{post.data.title}</h2>
+            {post.data.description && <p class="post-card-excerpt">{post.data.description}</p>}
+            <div class="post-card-footer">
+              <time datetime={post.data.date.toISOString()}>{dateFormatter.format(post.data.date)}</time>
+              <span class="post-card-cta">Read more →</span>
+            </div>
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</BlogLayout>

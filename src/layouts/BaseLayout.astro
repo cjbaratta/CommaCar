@@ -1,0 +1,62 @@
+---
+import "../styles.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogType?: "website" | "article";
+  bodyClass?: string;
+  includeAds?: boolean;
+  registerServiceWorker?: boolean;
+}
+
+const {
+  title,
+  description = "Find openpilot-compatible cars near you. Browse all US-market supported models, compare trim requirements, and search marketplace listings.",
+  canonicalUrl,
+  ogType = "website",
+  bodyClass,
+  includeAds = true,
+  registerServiceWorker = false,
+} = Astro.props;
+
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="theme-color" content="#0d4a5a" />
+    <link rel="canonical" href={canonical} />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+    <title>{title}</title>
+    {includeAds && <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983054307543608" crossorigin="anonymous"></script>}
+  </head>
+  <body class={bodyClass}>
+    <slot />
+    {
+      registerServiceWorker && (
+        <script>
+          if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+              navigator.serviceWorker.register("/sw.js");
+            });
+          }
+        </script>
+      )
+    }
+  </body>
+</html>
