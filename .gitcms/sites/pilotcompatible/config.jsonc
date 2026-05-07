@@ -1,0 +1,45 @@
+{
+  "version": "1",
+  "media_path": "/public",
+  "ssg_framework": "tanstack-start",
+  "frontmatter_format": "yaml",
+  "sitemap_url": "https://pilotcompatible.com/sitemap.xml",
+  "publishing_mode": "editorial_workflow",
+  "collections": [
+    {
+      "name": "posts",
+      "git_path": "/posts/",
+      "file_extension": ".md",
+      "filename_pattern": "",
+      "collection_type": "flat",
+      "frontmatter_schema": [
+        {
+          "name": "title",
+          "type": "title",
+          "label": "Title"
+        },
+        {
+          "name": "date",
+          "type": "datetime",
+          "label": "Date",
+          "withTime": true
+        },
+        {
+          "name": "description",
+          "type": "richtext",
+          "label": "Description"
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "label": "Category"
+        },
+        {
+          "name": "readingTime",
+          "type": "text",
+          "label": "Reading Time"
+        }
+      ]
+    }
+  ]
+}
