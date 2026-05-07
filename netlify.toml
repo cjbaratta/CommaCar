@@ -32,9 +32,3 @@
   for = "/sitemap.xml"
   [headers.values]
     Cache-Control = "public, max-age=3600"
-
-# Allow Netlify Identity OAuth popup to communicate with opener
-[[headers]]
-  for = "/admin/*"
-  [headers.values]
-    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
