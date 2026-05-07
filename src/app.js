@@ -19,7 +19,7 @@ import {
   vehicles as allCompatibilityRows,
 } from "./lib/vehicles.js";
 
-const PAGE_SIZE = 24;
+const PAGE_SIZE = 16;
 
 const app = document.querySelector("#app");
 const state = {
@@ -431,7 +431,7 @@ function renderPagination(currentPage, totalPages) {
     <nav class="pagination" aria-label="Vehicle results pages">
       <button class="page-btn page-nav" data-action="goto-page" data-page="${currentPage - 1}"
         ${!prev ? "disabled" : ""} aria-label="Previous page">&#8592; Prev</button>
-      <div class="page-numbers" role="list">${pageButtons}</div>
+      <div class="page-numbers">${pageButtons}</div>
       <button class="page-btn page-nav" data-action="goto-page" data-page="${currentPage + 1}"
         ${!next ? "disabled" : ""} aria-label="Next page">Next &#8594;</button>
     </nav>`;

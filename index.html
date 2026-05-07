@@ -13,12 +13,11 @@
     <meta name="twitter:description" content="Browse all US-market openpilot-compatible vehicles, compare trim requirements, and launch marketplace searches." />
     <meta name="theme-color" content="#0d4a5a" />
     <title>PilotCompatible — Find openpilot-ready cars near you</title>
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.svg" />
     <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
     <link rel="stylesheet" href="./src/styles.css" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983054307543608" crossorigin="anonymous"></script>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
     <main id="app"></main>
@@ -31,14 +30,47 @@
       }
     </script>
     <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('init', user => {
-          if (!user) {
-            window.netlifyIdentity.on('login', () => {
-              document.location.href = '/admin/';
-            });
-          }
+      const runWhenIdle = callback => {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(callback, { timeout: 2000 });
+        } else {
+          window.setTimeout(callback, 1200);
+        }
+      };
+
+      const loadScript = ({ src, async = true, crossOrigin }) => new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = async;
+        if (crossOrigin) script.crossOrigin = crossOrigin;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.append(script);
+      });
+
+      window.addEventListener('load', () => {
+        runWhenIdle(() => {
+          loadScript({
+            src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983054307543608',
+            crossOrigin: 'anonymous',
+          }).catch(() => {});
         });
+      });
+
+      const hasIdentityToken = /(?:invite|confirmation|recovery|email_change)_token=/.test(window.location.hash);
+      if (hasIdentityToken) {
+        loadScript({ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }).then(() => {
+          if (window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', user => {
+              if (!user) {
+                window.netlifyIdentity.on('login', () => {
+                  document.location.href = '/admin/';
+                });
+              }
+            });
+            window.netlifyIdentity.init();
+          }
+        }).catch(() => {});
       }
     </script>
   </body>

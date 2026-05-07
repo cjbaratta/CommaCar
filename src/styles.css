@@ -1466,6 +1466,16 @@ dd {
   .footer-nav {
     grid-template-columns: 1fr;
   }
+
+  .footer-nav-group {
+    gap: 0;
+  }
+
+  .footer-nav-group a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+  }
 }
 
 /* ── Markdown-rendered post body extras ─────────────────────────────────── */
