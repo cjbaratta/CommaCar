@@ -1,3 +1,5 @@
+// This file is used to tell search engines which pages to crawl and which to ignore.
+
 User-agent: *
 
 Disallow:
