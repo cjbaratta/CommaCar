@@ -3,7 +3,7 @@ title: "The History of comma Hardware: From EON to comma four"
 category: Guide
 date: "2026-05-07T05:00:00.000Z"
 readingTime: 10 min
-description: See the hardware evolution of Comma AI devices
+description: A look through the hardware evolution of Comma AI devices
 ---
 
 
