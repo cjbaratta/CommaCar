@@ -1,8 +1,9 @@
 ---
-import { getCollection } from "astro:content";
+import { sanityClient } from "../../lib/sanity";
+import { allPostsQuery } from "../../lib/queries";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 
-const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = await sanityClient.fetch(allPostsQuery);
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
@@ -25,17 +26,17 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
   <div class="blog-listing">
     {
-      posts.map((post) => (
+      posts.map((post: any) => (
         <article class="post-card">
-          <a href={`/blog/${post.id}/`} class="post-card-link">
+          <a href={`/blog/${post.slug}/`} class="post-card-link">
             <div class="post-card-meta">
-              <span class="post-category">{post.data.category}</span>
-              <span class="post-reading-time">{post.data.readingTime}</span>
+              <span class="post-category">{post.category}</span>
+              <span class="post-reading-time">{post.readingTime}</span>
             </div>
-            <h2 class="post-card-title">{post.data.title}</h2>
-            {post.data.description && <p class="post-card-excerpt">{post.data.description}</p>}
+            <h2 class="post-card-title">{post.title}</h2>
+            {post.description && <p class="post-card-excerpt">{post.description}</p>}
             <div class="post-card-footer">
-              <time datetime={post.data.date.toISOString()}>{dateFormatter.format(post.data.date)}</time>
+              <time datetime={new Date(post.publishedAt).toISOString()}>{dateFormatter.format(new Date(post.publishedAt))}</time>
               <span class="post-card-cta">Read more →</span>
             </div>
           </a>

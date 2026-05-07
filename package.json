@@ -5,17 +5,23 @@
   "type": "module",
   "scripts": {
     "build:data": "node scripts/build-vehicles-data.mjs /tmp/comma-vehicles.html",
-    "dev": "tinacms dev -c \"astro dev --host 127.0.0.1\"",
-    "dev:astro": "astro dev --host 127.0.0.1",
-    "build": "tinacms build --content=local --skip-cloud-checks --skip-indexing && astro build",
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build",
+    "preview": "astro preview",
     "lint": "node scripts/lint.mjs",
     "format": "node scripts/format.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "studio:dev": "cd studio && npx sanity dev",
+    "studio:deploy": "cd studio && npx sanity deploy"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.2",
-    "@tinacms/cli": "^2.2.5",
     "astro": "^6.2.2",
-    "tinacms": "^3.7.5"
+    "gray-matter": "^4.0.3",
+    "marked": "^18.0.3"
+  },
+  "dependencies": {
+    "@portabletext/to-html": "^5.0.2",
+    "@sanity/client": "^7.22.0"
   }
 }
