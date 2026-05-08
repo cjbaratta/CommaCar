@@ -1,7 +1,7 @@
 ---
 title: Used Car Buying Checklist for openpilot Shoppers
 category: Guide
-readingTime: 6 min
+readingTime: 7 min
 date: "2026-05-08T05:00:00.000Z"
 description: "Everything you need to verify before buying a used car you plan to run openpilot on — from trim-level gotchas to harness availability "
 ---
