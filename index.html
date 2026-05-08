@@ -56,22 +56,6 @@
           }).catch(() => {});
         });
       });
-
-      const hasIdentityToken = /(?:invite|confirmation|recovery|email_change)_token=/.test(window.location.hash);
-      if (hasIdentityToken) {
-        loadScript({ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }).then(() => {
-          if (window.netlifyIdentity) {
-            window.netlifyIdentity.on('init', user => {
-              if (!user) {
-                window.netlifyIdentity.on('login', () => {
-                  document.location.href = '/admin/';
-                });
-              }
-            });
-            window.netlifyIdentity.init();
-          }
-        }).catch(() => {});
-      }
-    </script>
+</script>
   </body>
 </html>
