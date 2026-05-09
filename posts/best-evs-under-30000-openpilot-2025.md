@@ -5,7 +5,6 @@ description: The best openpilot-compatible electric vehicles under $30,000 in 20
 category: Buyer's Guide
 readingTime: 9 min read
 ---
-
 Finding an openpilot-compatible EV under $30,000 is genuinely hard. Most affordable EVs lack the camera-based lane-centering hardware that openpilot requires. But the options that do exist are excellent — and they're getting more attainable as used inventory of 2022–2024 models builds up. This guide covers the best picks for 2026, what trims to target, and the caveats you need to know before buying.
 
 > **Prices change fast.** The figures below reflect early-2026 used market averages. Use the [PilotCompatible EV filter](/?evOnly=true) and the marketplace links on each vehicle card to see current listings near your ZIP code.

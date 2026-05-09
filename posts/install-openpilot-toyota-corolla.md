@@ -1,13 +1,10 @@
 ---
 title: How to Install openpilot on a Toyota Corolla
 date: "2026-05-01T00:00:00.000Z"
-description: |
-  Step-by-step guide to installing openpilot on a Toyota Corolla. Covers hardware, harness selection, mounting, software setup, and first-drive calibration.
+description: Step-by-step guide to installing openpilot on a Toyota Corolla. Covers hardware, harness selection, mounting, software setup, and first-drive calibration.
 category: Installation
 readingTime: 8 min read
 ---
-
-
 The Toyota Corolla is one of the most popular openpilot platforms — it's widely available, affordable, and supported across a broad range of model years (2020–2022 with TSS-P, and 2023+ with the updated package). This guide walks you through everything you need to go from a stock Corolla to a fully operational openpilot installation.
 
 > **Check compatibility first.** Use the [PilotCompatible vehicle finder](/) to confirm your exact model year is supported and to see which harness you need before ordering anything.

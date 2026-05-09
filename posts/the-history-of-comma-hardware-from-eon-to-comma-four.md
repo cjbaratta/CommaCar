@@ -5,8 +5,6 @@ date: "2026-05-07T05:00:00.000Z"
 readingTime: 10 min
 description: A look through the hardware evolution of Comma AI devices
 ---
-
-
 Over the last decade, comma.ai has gone from a tiny startup experimenting with smartphone-based driver assistance to one of the most influential names in the open-source ADAS world. Their hardware evolution mirrors the growth of openpilot itself: better cameras, more compute, wider car compatibility, and increasingly refined user experiences.
 
 Today, the latest device — the comma four — represents the company’s most polished and consumer-friendly hardware yet. But getting there required several generations of experimentation and iteration.

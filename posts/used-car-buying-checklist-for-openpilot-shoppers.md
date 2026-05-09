@@ -5,10 +5,6 @@ readingTime: 7 min
 date: "2026-05-08T05:00:00.000Z"
 description: "Everything you need to verify before buying a used car you plan to run openpilot on — from trim-level gotchas to harness availability "
 ---
-
-
----
-
 So you've decided to go the openpilot route — smart move. Comma.ai's open-source driver assistance system now supports 325+ car models and delivers a genuinely human-like driving experience that often outperforms the factory ADAS it replaces. But buying the *wrong* used car is a costly mistake that catches a lot of first-timers off guard. A car that looks perfect on paper can still fail to work with openpilot because of a missing trim package, a cracked windshield, or a mid-cycle hardware revision the listing didn't mention.
 
 This checklist will walk you through everything to verify before you hand over your money.
