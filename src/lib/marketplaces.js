@@ -73,6 +73,66 @@ function autolistUrl(vehicle, state) {
   return `https://www.autolist.com/listings#${params.toString()}`;
 }
 
+function truecarQueryString(params) {
+  return params.toString().replaceAll("%5B%5D", "[]");
+}
+
+function hybridBaseModel(vehicle) {
+  return vehicle.isHybrid
+    ? vehicle.marketplaceModel.replace(/\b(?:plug in|plug-in|phev|hybrid)\b$/i, "").replace(/\s+/g, " ").trim()
+    : vehicle.marketplaceModel;
+}
+
+function truecarModelToken(vehicle) {
+  const model = normalize(hybridBaseModel(vehicle));
+  return `${normalize(vehicle.make)}_${model.replaceAll(" ", "_")}`;
+}
+
+function truecarUrl(vehicle, state) {
+  if (!vehicle) return null;
+  const params = new URLSearchParams({
+    "mmt[]": truecarModelToken(vehicle),
+    yearLow: state.minYear || String(Math.min(...vehicle.years)),
+    yearHigh: String(Math.max(...vehicle.years)),
+  });
+  if (state.zip) {
+    params.set("searchRadius", state.radius);
+    params.set("zipcode", state.zip);
+  }
+
+  if (state.maxPrice) params.set("price_high", state.maxPrice);
+  if (state.hybridOnly || vehicle.isHybrid) params.append("fuelType[]", "Hybrid");
+  else if (state.evOnly || vehicle.isElectric) params.append("fuelType[]", "Electric");
+
+  return `https://www.truecar.com/used-cars-for-sale/listings/inventory/?${truecarQueryString(params)}`;
+}
+
+function carsForSaleUrl(vehicle, state) {
+  if (!vehicle) return null;
+  const params = new URLSearchParams({
+    radius: state.radius,
+    minmodelyear: state.minYear || String(Math.min(...vehicle.years)),
+    maxmodelyear: String(Math.max(...vehicle.years)),
+    pagenumber: "1",
+    pageresultsize: "24",
+    pricedvehiclesonly: "false",
+    filterimageless: "false",
+    hiderepairable: "false",
+    orderby: "Relevance",
+    orderdirection: "Desc",
+    makes: vehicle.make,
+    models: hybridBaseModel(vehicle),
+  });
+  if (state.zip) params.set("zipcode", state.zip);
+  if (state.maxPrice) params.set("maxprice", state.maxPrice);
+
+  ["Used", "Certified", "New"].forEach((condition) => params.append("conditions", condition));
+  if (state.hybridOnly || vehicle.isHybrid) params.append("fueltypes", "Gas/Electric Hybrid");
+  else if (state.evOnly || vehicle.isElectric) params.append("fueltypes", "Electric");
+
+  return `https://www.carsforsale.com/search?${params.toString()}`;
+}
+
 function carsComUrl(vehicle, query, state) {
   const params = new URLSearchParams({ sort: "listed_at_desc" });
   if (state.zip) {
@@ -101,6 +161,8 @@ export function marketplaceUrl(kind, query, state, vehicle = null) {
   if (kind === "autonation") return autonationUrl(vehicle, state) ?? siteSearchUrl("site:autonationusa.com/cars-for-sale", query, state);
   if (kind === "autolist") return autolistUrl(vehicle, state) ?? siteSearchUrl("site:autolist.com/listings", query, state);
   if (kind === "craigslist") return siteSearchUrl("site:craigslist.org/search/cta", query, state);
+  if (kind === "truecar") return truecarUrl(vehicle, state) ?? siteSearchUrl("site:truecar.com/used-cars-for-sale/listings", query, state);
+  if (kind === "carsforsale") return carsForSaleUrl(vehicle, state) ?? siteSearchUrl("site:carsforsale.com/search", query, state);
   return `https://www.facebook.com/marketplace/search/?query=${encodedQuery}`;
 }
 
@@ -115,6 +177,8 @@ const scanSites = {
   autonation: "site:autonationusa.com/cars-for-sale",
   autolist: "site:autolist.com/listings",
   craigslist: "site:craigslist.org/search/cta",
+  truecar: "site:truecar.com/used-cars-for-sale/listings",
+  carsforsale: "site:carsforsale.com/search",
 };
 
 const scanLabels = {
@@ -124,6 +188,8 @@ const scanLabels = {
   autolist: "Scan Autolist",
   craigslist: "Scan Craigslist",
   facebook: "Scan Facebook",
+  truecar: "Scan TrueCar",
+  carsforsale: "Scan CarsForSale",
 };
 
 export function marketplaceSearchLinks(sourceVehicles, state) {

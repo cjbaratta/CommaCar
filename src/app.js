@@ -20,6 +20,7 @@ import {
 } from "./lib/vehicles.js";
 
 const PAGE_SIZE = 16;
+const TARGET_MARKETPLACE_LINK_LIMIT = 6;
 
 const app = document.querySelector("#app");
 const state = {
@@ -247,7 +248,7 @@ function searchTargetCard(vehicle, safeState) {
       <p>${h(vehicle.requirement)}</p>
       ${featureChips(vehicle)}
       ${limitedTurnsNotice(vehicle)}
-      <div class="link-group target-actions">${marketplaceLinks(vehicle, safeState).slice(0, 4).map(sourceButton).join("")}</div>
+      <div class="link-group target-actions">${marketplaceLinks(vehicle, safeState).slice(0, TARGET_MARKETPLACE_LINK_LIMIT).map(sourceButton).join("")}</div>
       <details class="card-more target-more">
         <summary>Research links</summary>
         <div class="link-group muted-links">${reviewLinks(vehicle).slice(0, 2).map(sourceButton).join("")}</div>

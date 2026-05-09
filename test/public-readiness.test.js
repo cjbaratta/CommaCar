@@ -18,6 +18,7 @@ const baseState = normalizedState({
   accFilters: [],
   supportFilters: [],
   evOnly: false,
+  hybridOnly: false,
   onlyRecommended: false,
 });
 
@@ -77,6 +78,65 @@ test("marketplace URLs use buyer-facing model names without compatibility qualif
   assert.ok(!joined.includes("HDA"));
   assert.ok(!joined.includes("%28"));
   assert.ok(!joined.includes("%29"));
+});
+
+test("TrueCar links map supported hybrid vehicles to direct inventory URLs", () => {
+  const state = normalizedState({
+    ...baseState,
+    minYear: "2015",
+    maxPrice: "25000",
+  });
+  const vehicle = vehicles.find((item) => item.make === "Honda" && item.model === "Accord Hybrid" && item.years.includes(2025));
+  const links = marketplaceLinks(vehicle, state);
+  const href = links.find(([label]) => label === "TrueCar")?.[1] ?? "";
+
+  assert.ok(href.startsWith("https://www.truecar.com/used-cars-for-sale/listings/inventory/?"));
+  assert.ok(href.includes("mmt[]=honda_accord"));
+  assert.ok(href.includes("fuelType[]=Hybrid"));
+  assert.ok(href.includes("price_high=25000"));
+  assert.ok(href.includes("yearLow=2015"));
+  assert.ok(href.includes("yearHigh=2025"));
+  assert.ok(href.includes("searchRadius=100"));
+  assert.ok(href.includes("zipcode=60601"));
+});
+
+test("CarsForSale links map supported hybrid vehicles to direct search URLs", () => {
+  const state = normalizedState({
+    ...baseState,
+    minYear: "2010",
+    maxPrice: "25000",
+  });
+  const vehicle = vehicles.find((item) => item.make === "Honda" && item.model === "Accord Hybrid" && item.years.includes(2025));
+  const links = marketplaceLinks(vehicle, state);
+  const href = links.find(([label]) => label === "CarsForSale")?.[1] ?? "";
+  const params = new URL(href).searchParams;
+
+  assert.ok(href.startsWith("https://www.carsforsale.com/search?"));
+  assert.equal(params.get("radius"), "100");
+  assert.equal(params.get("maxprice"), "25000");
+  assert.equal(params.get("minmodelyear"), "2010");
+  assert.equal(params.get("maxmodelyear"), "2025");
+  assert.equal(params.get("pagenumber"), "1");
+  assert.equal(params.get("pageresultsize"), "24");
+  assert.equal(params.get("zipcode"), "60601");
+  assert.equal(params.get("orderby"), "Relevance");
+  assert.equal(params.get("orderdirection"), "Desc");
+  assert.deepEqual(params.getAll("conditions"), ["Used", "Certified", "New"]);
+  assert.equal(params.get("fueltypes"), "Gas/Electric Hybrid");
+  assert.equal(params.get("makes"), "Honda");
+  assert.equal(params.get("models"), "Accord");
+});
+
+test("official marketplace platforms are prioritized before peer-to-peer marketplaces", () => {
+  const vehicle = vehicles.find((item) => item.make === "Honda" && item.model === "Accord Hybrid" && item.years.includes(2025));
+  const labels = marketplaceLinks(vehicle, baseState).map(([label]) => label);
+
+  assert.ok(labels.indexOf("TrueCar") < labels.indexOf("Craigslist"));
+  assert.ok(labels.indexOf("TrueCar") < labels.indexOf("Facebook Marketplace"));
+  assert.ok(labels.indexOf("CarsForSale") < labels.indexOf("Craigslist"));
+  assert.ok(labels.indexOf("CarsForSale") < labels.indexOf("Facebook Marketplace"));
+  assert.ok(labels.slice(0, 6).includes("TrueCar"));
+  assert.ok(labels.slice(0, 6).includes("CarsForSale"));
 });
 
 test("capability filters still work with precomputed features", () => {
