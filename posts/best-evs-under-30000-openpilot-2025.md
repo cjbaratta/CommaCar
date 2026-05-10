@@ -1,7 +1,7 @@
 ---
 title: Best EVs Under $30,000 That Support openpilot (2026 Guide)
 date: 2026-03-28T00:00:00.000Z
-description: The best openpilot-compatible electric vehicles under $30,000 in 2026. Which trims to target, what to watch for, and how to find one near you.
+description: openpilot-compatible electric vehicles under $30,000 in 2026 - Which trims to target, what to watch for, and how to find one near you.
 category: Buyer's Guide
 readingTime: 9 min read
 ---
