@@ -6,7 +6,11 @@ import {
   supportFilterOptions,
 } from "./lib/config.js";
 import { analyzeListings } from "./lib/listings.js";
-import { marketplaceLinks, marketplaceSearchLinks, reviewLinks } from "./lib/marketplaces.js";
+import {
+  marketplaceLinks,
+  marketplaceSearchLinks,
+  reviewLinks,
+} from "./lib/marketplaces.js";
 import { normalizedState, updateInputValue } from "./lib/state.js";
 import { escapeHtml as h } from "./lib/text.js";
 import {
@@ -19,7 +23,7 @@ import {
   vehicles as allCompatibilityRows,
 } from "./lib/vehicles.js";
 
-const PAGE_SIZE = 16;
+const PAGE_SIZE = 18;
 const TARGET_MARKETPLACE_LINK_LIMIT = 6;
 
 const app = document.querySelector("#app");
@@ -46,7 +50,10 @@ let renderTimer = null;
 
 function optionList(values, selected) {
   return values
-    .map((value) => `<option value="${h(value)}" ${selected === value ? "selected" : ""}>${h(value)}</option>`)
+    .map(
+      (value) =>
+        `<option value="${h(value)}" ${selected === value ? "selected" : ""}>${h(value)}</option>`,
+    )
     .join("");
 }
 
@@ -101,7 +108,10 @@ function stat(label, value) {
 }
 
 function advancedFilterSummary() {
-  const count = state.alcFilters.length + state.accFilters.length + state.supportFilters.length;
+  const count =
+    state.alcFilters.length +
+    state.accFilters.length +
+    state.supportFilters.length;
   return count ? `${count} active` : "Any compatibility";
 }
 
@@ -168,7 +178,10 @@ function actionSection(label, links, className = "") {
 function featureChips(vehicle) {
   return `<div class="feature-chips">${capabilityFeatures(vehicle)
     .filter(([label]) => label !== "Turns")
-    .map(([label, value]) => `<span class="feature-chip"><strong>${h(label)}</strong>${h(value)}</span>`)
+    .map(
+      ([label, value]) =>
+        `<span class="feature-chip"><strong>${h(label)}</strong>${h(value)}</span>`,
+    )
     .join("")}</div>`;
 }
 
@@ -222,13 +235,18 @@ function filterSummary(count, safeState) {
   if (safeState.query.trim()) pieces.push(`"${safeState.query.trim()}"`);
   if (safeState.minYear) pieces.push(`${safeState.minYear}+`);
   if (safeState.bodyStyle !== "Any") pieces.push(safeState.bodyStyle);
-  if (safeState.alcFilters.length) pieces.push(`ALC: ${safeState.alcFilters.join(", ")}`);
-  if (safeState.accFilters.length) pieces.push(`ACC: ${safeState.accFilters.join(", ")}`);
-  if (safeState.supportFilters.length) pieces.push(safeState.supportFilters.join(", "));
+  if (safeState.alcFilters.length)
+    pieces.push(`ALC: ${safeState.alcFilters.join(", ")}`);
+  if (safeState.accFilters.length)
+    pieces.push(`ACC: ${safeState.accFilters.join(", ")}`);
+  if (safeState.supportFilters.length)
+    pieces.push(safeState.supportFilters.join(", "));
   if (safeState.evOnly) pieces.push("EV");
   if (safeState.hybridOnly) pieces.push("Hybrid / PHEV");
   if (safeState.onlyRecommended) pieces.push("Comma favorites");
-  const scope = pieces.length ? pieces.join(" · ") : "all US-market supported vehicles";
+  const scope = pieces.length
+    ? pieces.join(" · ")
+    : "all US-market supported vehicles";
   return `Showing ${count} compatible ${count === 1 ? "vehicle" : "vehicles"} for ${scope}.`;
 }
 
@@ -409,7 +427,9 @@ function renderShell() {
 function updateFilterCounts() {
   app.querySelectorAll("[data-filter-count]").forEach((element) => {
     const group = element.dataset.filterCount;
-    element.textContent = state[group].length ? `${state[group].length} selected` : "Any";
+    element.textContent = state[group].length
+      ? `${state[group].length} selected`
+      : "Any";
   });
   const advancedCount = app.querySelector("[data-advanced-filter-count]");
   if (advancedCount) advancedCount.textContent = advancedFilterSummary();
@@ -445,8 +465,15 @@ function renderDynamic() {
   const analyzed = analyzeListings(state.listingText);
   const matchedListings = analyzed.filter((row) => row.matches.length).length;
 
-  const rerenderZones = ["#vehicle-grid", "#target-grid", "#listing-results", "#marketplace-actions"];
-  const lostFocusZone = rerenderZones.find((sel) => app.querySelector(sel)?.contains(document.activeElement));
+  const rerenderZones = [
+    "#vehicle-grid",
+    "#target-grid",
+    "#listing-results",
+    "#marketplace-actions",
+  ];
+  const lostFocusZone = rerenderZones.find((sel) =>
+    app.querySelector(sel)?.contains(document.activeElement),
+  );
 
   updateFilterCounts();
   app.querySelector("#stats").innerHTML = [
@@ -459,14 +486,24 @@ function renderDynamic() {
 
   const listingToggleBtn = app.querySelector("[data-action='listing-toggle']");
   if (listingToggleBtn) {
-    listingToggleBtn.textContent = state.listingText === sampleListings.join("\n") ? "Clear sample" : "Load sample";
+    listingToggleBtn.textContent =
+      state.listingText === sampleListings.join("\n")
+        ? "Clear sample"
+        : "Load sample";
   }
-  app.querySelector("#result-summary").textContent = filterSummary(filtered.length, safeState);
+  app.querySelector("#result-summary").textContent = filterSummary(
+    filtered.length,
+    safeState,
+  );
   app.querySelector("#marketplace-actions").innerHTML = targetVehicles.length
-    ? marketplaceSearchLinks(targetVehicles, safeState).map(sourceButton).join("")
+    ? marketplaceSearchLinks(targetVehicles, safeState)
+        .map(sourceButton)
+        .join("")
     : `<span>Adjust your filters to find compatible vehicles and unlock marketplace searches.</span>`;
   app.querySelector("#target-grid").innerHTML = targetVehicles.length
-    ? targetVehicles.map((vehicle) => searchTargetCard(vehicle, safeState)).join("")
+    ? targetVehicles
+        .map((vehicle) => searchTargetCard(vehicle, safeState))
+        .join("")
     : `<div class="empty-state">
         <strong>No matching vehicles found.</strong>
         <span>Try adjusting your make, year, or body style, or <button class="empty-state-clear" data-action="clear-filters">clear all filters</button>.</span>
@@ -487,11 +524,13 @@ function renderDynamic() {
         <span>Try adjusting the make, year, or body style, or <button class="empty-state-clear" data-action="clear-filters">clear all filters</button>.</span>
       </div>`;
 
-  app.querySelector("#pagination").innerHTML = totalPages > 1
-    ? renderPagination(state.currentPage, totalPages)
-    : "";
-  app.querySelector("#listing-count").textContent = `${matchedListings}/${analyzed.length}`;
-  app.querySelector("#listing-results").innerHTML = analyzed.map(analysisRow).join("");
+  app.querySelector("#pagination").innerHTML =
+    totalPages > 1 ? renderPagination(state.currentPage, totalPages) : "";
+  app.querySelector("#listing-count").textContent =
+    `${matchedListings}/${analyzed.length}`;
+  app.querySelector("#listing-results").innerHTML = analyzed
+    .map(analysisRow)
+    .join("");
 
   if (lostFocusZone) {
     const zone = app.querySelector(lostFocusZone);
@@ -524,37 +563,37 @@ function syncInputValue(element, key) {
 
 function stateToParams() {
   const p = new URLSearchParams();
-  if (state.query)                   p.set("q",        state.query);
-  if (state.make !== "All")          p.set("make",     state.make);
-  if (state.zip)                     p.set("zip",      state.zip);
-  if (state.radius !== "100")        p.set("r",        state.radius);
-  if (state.minYear)                 p.set("minYear",  state.minYear);
-  if (state.maxPrice)                p.set("maxPrice", state.maxPrice);
-  if (state.bodyStyle !== "Any")     p.set("body",     state.bodyStyle);
-  if (state.alcFilters.length)       p.set("alc",      state.alcFilters.join(","));
-  if (state.accFilters.length)       p.set("acc",      state.accFilters.join(","));
-  if (state.supportFilters.length)   p.set("sup",      state.supportFilters.join(","));
-  if (state.evOnly)                  p.set("ev",       "1");
-  if (state.hybridOnly)              p.set("hybrid",   "1");
-  if (state.onlyRecommended)         p.set("fav",      "1");
+  if (state.query) p.set("q", state.query);
+  if (state.make !== "All") p.set("make", state.make);
+  if (state.zip) p.set("zip", state.zip);
+  if (state.radius !== "100") p.set("r", state.radius);
+  if (state.minYear) p.set("minYear", state.minYear);
+  if (state.maxPrice) p.set("maxPrice", state.maxPrice);
+  if (state.bodyStyle !== "Any") p.set("body", state.bodyStyle);
+  if (state.alcFilters.length) p.set("alc", state.alcFilters.join(","));
+  if (state.accFilters.length) p.set("acc", state.accFilters.join(","));
+  if (state.supportFilters.length) p.set("sup", state.supportFilters.join(","));
+  if (state.evOnly) p.set("ev", "1");
+  if (state.hybridOnly) p.set("hybrid", "1");
+  if (state.onlyRecommended) p.set("fav", "1");
   return p;
 }
 
 function paramsToState() {
   const p = new URLSearchParams(window.location.search);
-  if (p.has("q"))        state.query           = p.get("q");
-  if (p.has("make"))     state.make            = p.get("make");
-  if (p.has("zip"))      state.zip             = p.get("zip");
-  if (p.has("r"))        state.radius          = p.get("r");
-  if (p.has("minYear"))  state.minYear         = p.get("minYear");
-  if (p.has("maxPrice")) state.maxPrice        = p.get("maxPrice");
-  if (p.has("body"))     state.bodyStyle       = p.get("body");
-  if (p.has("alc"))      state.alcFilters      = p.get("alc").split(",");
-  if (p.has("acc"))      state.accFilters      = p.get("acc").split(",");
-  if (p.has("sup"))      state.supportFilters  = p.get("sup").split(",");
-  if (p.has("ev"))       state.evOnly          = true;
-  if (p.has("hybrid"))   state.hybridOnly      = true;
-  if (p.has("fav"))      state.onlyRecommended = true;
+  if (p.has("q")) state.query = p.get("q");
+  if (p.has("make")) state.make = p.get("make");
+  if (p.has("zip")) state.zip = p.get("zip");
+  if (p.has("r")) state.radius = p.get("r");
+  if (p.has("minYear")) state.minYear = p.get("minYear");
+  if (p.has("maxPrice")) state.maxPrice = p.get("maxPrice");
+  if (p.has("body")) state.bodyStyle = p.get("body");
+  if (p.has("alc")) state.alcFilters = p.get("alc").split(",");
+  if (p.has("acc")) state.accFilters = p.get("acc").split(",");
+  if (p.has("sup")) state.supportFilters = p.get("sup").split(",");
+  if (p.has("ev")) state.evOnly = true;
+  if (p.has("hybrid")) state.hybridOnly = true;
+  if (p.has("fav")) state.onlyRecommended = true;
 }
 
 paramsToState();
@@ -579,9 +618,13 @@ app.addEventListener("change", (event) => {
   if (!filterElement) return;
   const group = filterElement.dataset.filterGroup;
   const value = filterElement.value;
-  if (!state.openFilterPanels.includes("advanced")) state.openFilterPanels = [...state.openFilterPanels, "advanced"];
-  if (!state.openFilterPanels.includes(group)) state.openFilterPanels = [...state.openFilterPanels, group];
-  state[group] = filterElement.checked ? [...state[group], value] : state[group].filter((item) => item !== value);
+  if (!state.openFilterPanels.includes("advanced"))
+    state.openFilterPanels = [...state.openFilterPanels, "advanced"];
+  if (!state.openFilterPanels.includes(group))
+    state.openFilterPanels = [...state.openFilterPanels, group];
+  state[group] = filterElement.checked
+    ? [...state[group], value]
+    : state[group].filter((item) => item !== value);
   renderDynamic();
 });
 
@@ -593,15 +636,21 @@ app.addEventListener("click", (event) => {
     const page = Number(event.target.closest("[data-page]").dataset.page);
     state.currentPage = page;
     renderDynamic();
-    app.querySelector("#vehicle-grid").scrollIntoView({ behavior: "instant", block: "start" });
+    app
+      .querySelector("#vehicle-grid")
+      .scrollIntoView({ behavior: "instant", block: "start" });
   }
 });
 
-app.addEventListener("toggle", (event) => {
-  const panel = event.target.closest("[data-filter-panel]");
-  if (!panel) return;
-  const group = panel.dataset.filterPanel;
-  state.openFilterPanels = panel.open
-    ? [...new Set([...state.openFilterPanels, group])]
-    : state.openFilterPanels.filter((item) => item !== group);
-}, true);
+app.addEventListener(
+  "toggle",
+  (event) => {
+    const panel = event.target.closest("[data-filter-panel]");
+    if (!panel) return;
+    const group = panel.dataset.filterPanel;
+    state.openFilterPanels = panel.open
+      ? [...new Set([...state.openFilterPanels, group])]
+      : state.openFilterPanels.filter((item) => item !== group);
+  },
+  true,
+);
