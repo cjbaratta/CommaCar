@@ -1,9 +1,9 @@
-const CACHE_NAME = 'pilotcompat-v1';
+const CACHE_NAME = 'pilotcompat-v2';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) =>
-      cache.addAll(['/', '/manifest.json', '/icons/icon.svg', '/icons/icon-maskable.svg'])
+      cache.addAll(['/', '/manifest.json', '/favicon.ico', '/icons/icon.svg', '/icons/icon-maskable.svg'])
     )
   );
   self.skipWaiting();
