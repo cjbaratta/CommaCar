@@ -10,9 +10,20 @@ A lightweight static Vite app for finding US-market vehicles with comma.ai openp
 
 - `npm run dev` starts the local Vite server.
 - `npm run build` creates the production build.
+- `npm run indexnow:submit` submits the current sitemap URLs to IndexNow after a production deploy.
 - `npm test` runs the public-readiness regression tests.
 - `npm run lint` checks JavaScript syntax and repository hygiene.
 - `npm run format` trims trailing whitespace and ensures final newlines.
 - `npm run build:data` regenerates compatibility data from a saved comma.ai vehicles HTML page at `/tmp/comma-vehicles.html`.
+
+## IndexNow
+
+The IndexNow key file is published from `public/` so search engines can verify ownership of `https://www.pilotcompatible.com`.
+
+After deploying a production build:
+
+1. Confirm the key file is reachable at `https://www.pilotcompatible.com/67a6e289566a459f83636eb5efcf94ef.txt`.
+2. Confirm the sitemap is reachable at `https://www.pilotcompatible.com/sitemap.xml`.
+3. Run `npm run indexnow:submit` to submit every URL from `public/sitemap.xml`.
 
 Compatibility data comes from `https://comma.ai/vehicles`; the checked-in data was generated on May 1, 2026 from a source page last updated February 20, 2026.
