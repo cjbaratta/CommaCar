@@ -289,41 +289,6 @@ textarea {
   color: #fff;
 }
 
-.target-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 12px;
-}
-
-.target-card {
-  display: grid;
-  gap: 11px;
-  padding: 15px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel);
-}
-
-.target-card-head {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 6px;
-  align-items: start;
-}
-
-.target-card h3 {
-  margin: 3px 0 0;
-  font-size: 1.25rem;
-  line-height: 1.05;
-}
-
-.target-card p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
 .feature-chips {
   display: flex;
   flex-wrap: wrap;
@@ -671,10 +636,6 @@ details .listing-results {
 }
 
 .inline-badges {
-  justify-content: flex-start;
-}
-
-.target-card-head .inline-badges {
   justify-content: flex-start;
 }
 

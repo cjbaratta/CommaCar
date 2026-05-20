@@ -250,31 +250,6 @@ function filterSummary(count, safeState) {
   return `Showing ${count} compatible ${count === 1 ? "vehicle" : "vehicles"} for ${scope}.`;
 }
 
-function searchTargetCard(vehicle, safeState) {
-  return `
-    <article class="target-card" aria-label="${h(vehicle.make)} ${h(vehicle.model)}">
-      <div class="target-card-head">
-        <div>
-          <span class="eyebrow">${h(vehicle.make)}</span>
-          <h3>${h(vehicle.model)}</h3>
-        </div>
-        <div class="inline-badges">
-          <div class="year-strip">${h(displayYears(vehicle))}</div>
-          ${marketBadges(vehicle)}
-        </div>
-      </div>
-      <p>${h(vehicle.requirement)}</p>
-      ${featureChips(vehicle)}
-      ${limitedTurnsNotice(vehicle)}
-      <div class="link-group target-actions">${marketplaceLinks(vehicle, safeState).slice(0, TARGET_MARKETPLACE_LINK_LIMIT).map(sourceButton).join("")}</div>
-      <details class="card-more target-more">
-        <summary>Research links</summary>
-        <div class="link-group muted-links">${reviewLinks(vehicle).slice(0, 2).map(sourceButton).join("")}</div>
-      </details>
-    </article>
-  `;
-}
-
 function analysisRow(result) {
   if (!result.matches.length) {
     return `
@@ -352,7 +327,6 @@ function renderShell() {
       <div class="search-header">
         <div>
           <span class="eyebrow">Market scan</span>
-          <h2>Recommended searches</h2>
           <p>Results update as you filter. Open a search to browse listings, then confirm trim and package before buying.</p>
         </div>
       </div>
@@ -362,7 +336,6 @@ function renderShell() {
         <summary>About these links</summary>
         <p>Links are simplified for search and may omit region-specific notes. Non-US models are hidden since searches are location-based.</p>
       </details>
-      <div id="target-grid" class="target-grid"></div>
     </section>
 
     <section class="workspace">
@@ -467,7 +440,6 @@ function renderDynamic() {
 
   const rerenderZones = [
     "#vehicle-grid",
-    "#target-grid",
     "#listing-results",
     "#marketplace-actions",
   ];
@@ -500,14 +472,6 @@ function renderDynamic() {
         .map(sourceButton)
         .join("")
     : `<span>Adjust your filters to find compatible vehicles and unlock marketplace searches.</span>`;
-  app.querySelector("#target-grid").innerHTML = targetVehicles.length
-    ? targetVehicles
-        .map((vehicle) => searchTargetCard(vehicle, safeState))
-        .join("")
-    : `<div class="empty-state">
-        <strong>No matching vehicles found.</strong>
-        <span>Try adjusting your make, year, or body style, or <button class="empty-state-clear" data-action="clear-filters">clear all filters</button>.</span>
-      </div>`;
   if (filtered.length !== state._lastFilteredCount) {
     state.currentPage = 0;
     state._lastFilteredCount = filtered.length;
