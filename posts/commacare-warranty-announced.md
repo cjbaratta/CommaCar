@@ -6,13 +6,13 @@ category: "News"
 reading_time: "6 min read"
 ---
 
-# comma.ai Launches commacare: Extended Warranty Coverage Comes to comma four
-
 comma.ai has officially introduced [commacare](https://blog.comma.ai/commacare/), a new extended warranty offering for the comma four. The announcement marks the company’s first modern subscription-linked hardware protection program and adds another layer to the growing ecosystem around openpilot ownership.
 
 The new program extends warranty coverage on the comma four to a total of **two years**, but there’s a catch: it’s only available through a qualifying **comma prime** or **prime lite** subscription.
 
 For a company that has historically focused heavily on open-source software and enthusiast-driven development, the move signals a continued push toward a more polished consumer ownership experience.
+
+---
 
 ## What Is commacare?
 
@@ -36,6 +36,8 @@ Existing prime lite subscribers locked in at the old $10/month pricing will repo
 
 Additional subscription details are available on the official [comma connect page](https://comma.ai/connect#what-is-commacare).
 
+---
+
 ## How Users Become Eligible
 
 comma.ai says users must:
@@ -47,6 +49,8 @@ comma.ai says users must:
 There is also a temporary grace period for existing comma four owners. Devices delivered earlier can still become eligible if subscribed before **June 18, 2026**.
 
 Coverage status appears directly inside comma connect with a dedicated commacare badge.
+
+---
 
 ## What commacare Covers — And What It Doesn’t
 
@@ -63,11 +67,15 @@ Importantly, canceling the associated subscription immediately ends commacare co
 
 That detail has become one of the most discussed parts of the announcement.
 
+---
+
 ## Community Reaction: Mixed but Passionate
 
 As expected for a major comma.ai policy change, reactions from the openpilot community were immediate and varied.
 
 The largest discussion appeared on Reddit’s [r/Comma_ai thread covering the announcement](https://www.reddit.com/r/Comma_ai/comments/1ti1lkt/introducing_commacare_an_extended_warranty_for/).
+
+---
 
 ### Positive Reactions
 
@@ -76,6 +84,8 @@ Some users welcomed the move as a sign that comma.ai is maturing operationally a
 A few buyers noted that the inclusion of LTE, cloud features, and warranty protection together makes the full prime subscription easier to justify.
 
 Others appreciated that existing subscribers were grandfathered into older pricing.
+
+---
 
 ### Concerns About Subscription Lock-In
 
@@ -92,6 +102,8 @@ One Reddit commenter summarized the sentiment bluntly:
 > “Offer a 3-year warranty for $99 at the point of sale and I'm in.”
 
 Others questioned whether the short extension period implied concerns about long-term hardware durability.
+
+---
 
 ### Hardware Reliability Discussion Reignited
 
@@ -116,6 +128,8 @@ The company says only 47 out of more than 7,100 comma four units shipped have re
 
 If accurate, those numbers represent a dramatic reliability improvement over previous generations.
 
+---
+
 ## Why This Matters for the openpilot Ecosystem
 
 The launch of commacare is significant beyond just warranty coverage.
@@ -136,6 +150,8 @@ Historically, openpilot users accepted a degree of tinkering, DIY troubleshootin
 
 That could matter tremendously as the driver-assistance market becomes more competitive and new openpilot-adjacent hardware alternatives continue appearing.
 
+---
+
 ## The Bigger Strategic Picture
 
 There’s also a business reality behind the move.
@@ -154,6 +170,8 @@ and
 - enthusiast-friendly openness
 
 continues to be one of the most fascinating aspects of the comma.ai ecosystem.
+
+---
 
 ## Final Thoughts
 
