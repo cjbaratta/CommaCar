@@ -66,7 +66,14 @@ test("body-style filter uses enriched metadata instead of brittle sedan tokens",
 test("default vehicle source hides non-US-market rows", () => {
   assert.ok(vehicles.some((vehicle) => vehicle.model.includes("Korea only")));
   assert.ok(!usVehicles.some((vehicle) => vehicle.model.includes("Korea only")));
+  assert.ok(!usVehicles.some((vehicle) => vehicle.model.includes("Singapore")));
   assert.ok(!filterVehicles(baseState).some((vehicle) => vehicle.model.includes("Korea only")));
+});
+
+test("non-US guidance does not hide supported US-market Subaru rows", () => {
+  assert.ok(usVehicles.some((vehicle) => vehicle.make === "Subaru" && vehicle.model === "Ascent"));
+  assert.ok(usVehicles.some((vehicle) => vehicle.make === "Subaru" && vehicle.model === "Outback"));
+  assert.ok(!usVehicles.some((vehicle) => vehicle.make === "Subaru" && vehicle.model === "XV"));
 });
 
 test("marketplace URLs use buyer-facing model names without compatibility qualifiers", () => {
@@ -95,7 +102,7 @@ test("TrueCar links map supported hybrid vehicles to direct inventory URLs", () 
   assert.ok(href.includes("fuelType[]=Hybrid"));
   assert.ok(href.includes("price_high=25000"));
   assert.ok(href.includes("yearLow=2015"));
-  assert.ok(href.includes("yearHigh=2025"));
+  assert.ok(href.includes("yearHigh=2026"));
   assert.ok(href.includes("searchRadius=100"));
   assert.ok(href.includes("zipcode=60601"));
 });
@@ -115,7 +122,7 @@ test("CarsForSale links map supported hybrid vehicles to direct search URLs", ()
   assert.equal(params.get("radius"), "100");
   assert.equal(params.get("maxprice"), "25000");
   assert.equal(params.get("minmodelyear"), "2010");
-  assert.equal(params.get("maxmodelyear"), "2025");
+  assert.equal(params.get("maxmodelyear"), "2026");
   assert.equal(params.get("pagenumber"), "1");
   assert.equal(params.get("pageresultsize"), "24");
   assert.equal(params.get("zipcode"), "60601");

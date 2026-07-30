@@ -2,6 +2,8 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 
 const source = process.argv[2] ?? "/tmp/comma-vehicles.html";
 const html = readFileSync(source, "utf8");
+const generatedOn = new Date().toISOString().slice(0, 10);
+const sourceUpdated = html.match(/Last updated:\s*([^<]+)/)?.[1]?.trim();
 
 const decode = (value) =>
   value
@@ -86,7 +88,7 @@ for (const [, , makeHtml, body] of makeSections) {
 mkdirSync("src/data", { recursive: true });
 writeFileSync(
   "src/data/vehicles.js",
-  `// Generated from https://comma.ai/vehicles on 2026-05-01.\nexport const commaVehicles = ${JSON.stringify(vehicles, null, 2)};\n`,
+  `// Generated from https://comma.ai/vehicles on ${generatedOn}${sourceUpdated ? ` (source updated ${sourceUpdated})` : ""}.\nexport const commaVehicles = ${JSON.stringify(vehicles, null, 2)};\n`,
 );
 
 console.log(`Wrote ${vehicles.length} vehicle compatibility rows.`);

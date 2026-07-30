@@ -1,4 +1,4 @@
-// Generated from https://comma.ai/vehicles on 2026-05-01.
+// Generated from https://comma.ai/vehicles on 2026-07-30 (source updated July 15, 2026).
 export const commaVehicles = [
   {
     "id": "acura-ilx-2016",
@@ -29,6 +29,22 @@ export const commaVehicles = [
     "harness": "Honda Nidec",
     "capability": "openpilot upgrades your Acura ILX with automated lane centering and adaptive cruise control while driving above 26 mph . This car may not be able to take tight turns on its own. Traffic light and stop sign handling is also available in Experimental mode .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Acura ILX 2019"
+  },
+  {
+    "id": "acura-mdx-2022",
+    "make": "Acura",
+    "model": "MDX",
+    "years": [
+      2022,
+      2023,
+      2024
+    ],
+    "yearsLabel": "2022, 2023, 2024",
+    "requirement": "openpilot will work with all packages and trims of this car.",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
+    "harness": "Honda Bosch A",
+    "capability": "openpilot upgrades your Acura MDX with automated lane centering above 43 mph , and adaptive cruise control that automatically resumes from a stop .",
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Acura MDX 2022-24"
   },
   {
     "id": "acura-mdx-2025",
@@ -72,7 +88,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2019, 2020, 2021",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Acura RDX with automated lane centering above 3 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Acura RDX 2019-21"
@@ -82,14 +98,15 @@ export const commaVehicles = [
     "make": "Acura",
     "model": "TLX",
     "years": [
-      2021
+      2021,
+      2022
     ],
-    "yearsLabel": "2021",
+    "yearsLabel": "2021, 2022",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Acura TLX with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
-    "shopUrl": "https://comma.ai/shop/comma-four?harness=Acura TLX 2021"
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Acura TLX 2021-22"
   },
   {
     "id": "acura-tlx-2025",
@@ -593,28 +610,36 @@ export const commaVehicles = [
     "make": "Ford",
     "model": "Focus",
     "years": [
-      2018
+      2018,
+      2019,
+      2020,
+      2021,
+      2022
     ],
-    "yearsLabel": "2018",
+    "yearsLabel": "2018, 2019, 2020, 2021, 2022",
     "requirement": "openpilot requires the car to come equipped with Adaptive Cruise Control with Lane Centering .",
     "note": "Refers only to the Focus Mk4 (C519) available in Europe/China/Taiwan/Australasia, not the Focus Mk3 (C346) in North and South America/Southeast Asia.",
     "harness": "Ford Q3",
     "capability": "openpilot upgrades your Ford Focus with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop . Traffic light and stop sign handling is also available in Experimental mode .",
-    "shopUrl": "https://comma.ai/shop/comma-four?harness=Ford Focus 2018"
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Ford Focus 2018-22"
   },
   {
     "id": "ford-focus-hybrid-2018",
     "make": "Ford",
     "model": "Focus Hybrid",
     "years": [
-      2018
+      2018,
+      2019,
+      2020,
+      2021,
+      2022
     ],
-    "yearsLabel": "2018",
+    "yearsLabel": "2018, 2019, 2020, 2021, 2022",
     "requirement": "openpilot requires the car to come equipped with Adaptive Cruise Control with Lane Centering .",
     "note": "Refers only to the Focus Mk4 (C519) available in Europe/China/Taiwan/Australasia, not the Focus Mk3 (C346) in North and South America/Southeast Asia.",
     "harness": "Ford Q3",
     "capability": "openpilot upgrades your Ford Focus Hybrid with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop . Traffic light and stop sign handling is also available in Experimental mode .",
-    "shopUrl": "https://comma.ai/shop/comma-four?harness=Ford Focus Hybrid 2018"
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Ford Focus Hybrid 2018-22"
   },
   {
     "id": "ford-kuga-2020",
@@ -1020,7 +1045,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2018, 2019, 2020, 2021, 2022",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda Accord with automated lane centering above 3 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Accord 2018-22"
@@ -1054,7 +1079,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2018, 2019, 2020, 2021, 2022",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda Accord Hybrid with automated lane centering above 3 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Accord Hybrid 2018-22"
@@ -1066,14 +1091,15 @@ export const commaVehicles = [
     "years": [
       2023,
       2024,
-      2025
+      2025,
+      2026
     ],
-    "yearsLabel": "2023, 2024, 2025",
+    "yearsLabel": "2023, 2024, 2025, 2026",
     "requirement": "openpilot will work with all packages and trims of this car.",
     "note": "",
     "harness": "Honda Bosch C",
     "capability": "openpilot upgrades your Honda Accord Hybrid with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
-    "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Accord Hybrid 2023-25"
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Accord Hybrid 2023-26"
   },
   {
     "id": "honda-city-brazil-only-2023",
@@ -1084,7 +1110,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2023",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch B",
     "capability": "openpilot upgrades your Honda City (Brazil only) with automated lane centering above 14 mph , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda City (Brazil only) 2023"
@@ -1132,7 +1158,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2022, 2023, 2024",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch B",
     "capability": "openpilot upgrades your Honda Civic with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Civic 2022-24"
@@ -1147,7 +1173,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2017, 2018",
     "requirement": "openpilot requires the car to come equipped with Honda Sensing .",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda Civic Hatchback with automated lane centering above 12 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Civic Hatchback 2017-18"
@@ -1163,7 +1189,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2019, 2020, 2021",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda Civic Hatchback with automated lane centering above 12 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Civic Hatchback 2019-21"
@@ -1179,7 +1205,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2022, 2023, 2024",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch B",
     "capability": "openpilot upgrades your Honda Civic Hatchback with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Civic Hatchback 2022-24"
@@ -1194,7 +1220,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2025, 2026",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch B",
     "capability": "openpilot upgrades your Honda Civic Hatchback Hybrid with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Civic Hatchback Hybrid 2025-26"
@@ -1208,7 +1234,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2023",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch B",
     "capability": "openpilot upgrades your Honda Civic Hatchback Hybrid (Europe only) with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Civic Hatchback Hybrid (Europe only) 2023"
@@ -1223,7 +1249,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2025, 2026",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch B",
     "capability": "openpilot upgrades your Honda Civic Hybrid with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Civic Hybrid 2025-26"
@@ -1257,7 +1283,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2017, 2018, 2019, 2020, 2021, 2022",
     "requirement": "openpilot requires the car to come equipped with Honda Sensing .",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda CR-V with automated lane centering above 15 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda CR-V 2017-22"
@@ -1293,7 +1319,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2017, 2018, 2019, 2020, 2021, 2022",
     "requirement": "openpilot requires the car to come equipped with Honda Sensing .",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda CR-V Hybrid with automated lane centering above 12 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda CR-V Hybrid 2017-22"
@@ -1324,7 +1350,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2020",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda e with automated lane centering above 3 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda e 2020"
@@ -1387,7 +1413,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2023, 2024, 2025",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch B",
     "capability": "openpilot upgrades your Honda HR-V with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda HR-V 2023-25"
@@ -1404,7 +1430,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2019, 2020, 2021, 2022",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda Insight with automated lane centering above 3 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Insight 2019-22"
@@ -1418,7 +1444,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2018",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda Inspire with automated lane centering above 3 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Inspire 2018"
@@ -1432,7 +1458,7 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2018",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda N-Box with automated lane centering above 11 mph , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda N-Box 2018"
@@ -1467,10 +1493,24 @@ export const commaVehicles = [
     ],
     "yearsLabel": "2021, 2022, 2023, 2024, 2025, 2026",
     "requirement": "openpilot will work with all packages and trims of this car.",
-    "note": "",
+    "note": "Enabling longitudinal control (alpha) will disable all CMBS functionality, including AEB and FCW.",
     "harness": "Honda Bosch A",
     "capability": "openpilot upgrades your Honda Odyssey with automated lane centering above 43 mph , and adaptive cruise control that automatically resumes from a stop . This car may not be able to take tight turns on its own.",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Odyssey 2021-26"
+  },
+  {
+    "id": "honda-odyssey-singapore-2021",
+    "make": "Honda",
+    "model": "Odyssey (Singapore)",
+    "years": [
+      2021
+    ],
+    "yearsLabel": "2021",
+    "requirement": "openpilot requires the car to come equipped with Honda Sensing .",
+    "note": "",
+    "harness": "Honda Nidec",
+    "capability": "openpilot upgrades your Honda Odyssey (Singapore) with automated lane centering and adaptive cruise control while driving above 19 mph . This car may not be able to take tight turns on its own. Traffic light and stop sign handling is also available in Experimental mode .",
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda Odyssey (Singapore) 2021"
   },
   {
     "id": "honda-odyssey-taiwan-2018",
@@ -1806,6 +1846,21 @@ export const commaVehicles = [
     "harness": "Hyundai P",
     "capability": "openpilot upgrades your Hyundai Ioniq 6 (with HDA II) with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Hyundai Ioniq 6 (with HDA II) 2023-24"
+  },
+  {
+    "id": "hyundai-ioniq-6-without-hda-ii-2023",
+    "make": "Hyundai",
+    "model": "Ioniq 6 (without HDA II)",
+    "years": [
+      2023,
+      2024
+    ],
+    "yearsLabel": "2023, 2024",
+    "requirement": "openpilot requires the car to come equipped with Highway Driving Assist .",
+    "note": "",
+    "harness": "Hyundai L",
+    "capability": "openpilot upgrades your Hyundai Ioniq 6 (without HDA II) with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Hyundai Ioniq 6 (without HDA II) 2023-24"
   },
   {
     "id": "hyundai-ioniq-electric-2019",
@@ -2518,18 +2573,19 @@ export const commaVehicles = [
     "shopUrl": "https://comma.ai/shop/comma-four?harness=Kia Niro EV 2022"
   },
   {
-    "id": "kia-niro-ev-with-hda-ii-2025",
+    "id": "kia-niro-ev-with-hda-ii-2024",
     "make": "Kia",
     "model": "Niro EV (with HDA II)",
     "years": [
+      2024,
       2025
     ],
-    "yearsLabel": "2025",
+    "yearsLabel": "2024, 2025",
     "requirement": "openpilot requires the car to come equipped with Highway Driving Assist II .",
     "note": "",
     "harness": "Hyundai R",
     "capability": "openpilot upgrades your Kia Niro EV (with HDA II) with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
-    "shopUrl": "https://comma.ai/shop/comma-four?harness=Kia Niro EV (with HDA II) 2025"
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Kia Niro EV (with HDA II) 2024-25"
   },
   {
     "id": "kia-niro-ev-without-hda-ii-2023",
@@ -2594,14 +2650,15 @@ export const commaVehicles = [
     "make": "Kia",
     "model": "Niro Hybrid",
     "years": [
-      2023
+      2023,
+      2024
     ],
-    "yearsLabel": "2023",
+    "yearsLabel": "2023, 2024",
     "requirement": "openpilot requires the car to come equipped with Smart Cruise Control (SCC) .",
     "note": "",
     "harness": "Hyundai A",
     "capability": "openpilot upgrades your Kia Niro Hybrid with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
-    "shopUrl": "https://comma.ai/shop/comma-four?harness=Kia Niro Hybrid 2023"
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Kia Niro Hybrid 2023-24"
   },
   {
     "id": "kia-niro-plug-in-hybrid-2018",
@@ -3344,14 +3401,17 @@ export const commaVehicles = [
     "years": [
       2019,
       2020,
+      2021,
+      2022,
+      2023,
       2024
     ],
-    "yearsLabel": "2019, 2020, 2024",
+    "yearsLabel": "2019, 2020, 2021, 2022, 2023, 2024",
     "requirement": "openpilot requires the car to come equipped with ProPILOT Assist .",
     "note": "",
     "harness": "Nissan B",
     "capability": "openpilot upgrades your Nissan Altima with automated lane centering at all speeds , and adaptive cruise control.",
-    "shopUrl": "https://comma.ai/shop/comma-four?harness=Nissan Altima 2019-20, 2024"
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Nissan Altima 2019-24"
   },
   {
     "id": "nissan-leaf-2018",

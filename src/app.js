@@ -345,7 +345,7 @@ function renderShell() {
           <h2>Supported models</h2>
         </div>
         <div class="source-note">
-          Data sourced from <a href="https://comma.ai/vehicles" target="_blank" rel="noreferrer">comma.ai/vehicles</a>, last updated May 1, 2026. Always confirm trim and package before buying.
+          Data sourced from <a href="https://comma.ai/vehicles" target="_blank" rel="noreferrer">comma.ai/vehicles</a>, last checked July 30, 2026 (source updated July 15, 2026). Always confirm trim and package before buying.
         </div>
         <div id="vehicle-grid" class="vehicle-grid"></div>
         <div id="pagination"></div>

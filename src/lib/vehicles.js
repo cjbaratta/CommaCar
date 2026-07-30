@@ -134,11 +134,18 @@ const nonUsPatterns = [
   "europe",
   "korea",
   "non-us",
+  "singapore",
+  "south america",
   "southeast asia",
   "taiwan",
 ];
 
 const nonUsVehicleIds = new Set([
+  "ford-focus-2018",
+  "ford-focus-hybrid-2018",
+  "subaru-xv-2018",
+  "subaru-xv-2020",
+  "volkswagen-passat-2015",
   "volkswagen-touran-2016",
 ]);
 
@@ -200,7 +207,7 @@ function isHybrid(vehicle) {
 
 function isUsMarket(vehicle) {
   if (nonUsVehicleIds.has(vehicle.id)) return false;
-  const marketText = normalize(`${vehicle.model} ${vehicle.requirement} ${vehicle.note}`);
+  const marketText = normalize(vehicle.model);
   return !nonUsPatterns.some((pattern) => marketText.includes(normalize(pattern)));
 }
 
