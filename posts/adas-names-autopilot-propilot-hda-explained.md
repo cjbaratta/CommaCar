@@ -6,8 +6,6 @@ category: Buyer's Guide
 reading_time: 10 minute read
 ---
 
-# Autopilot, Pilot Assist, ProPILOT and HDA: Why ADAS Names Are So Confusing
-
 Tesla has Autopilot. Volvo has Pilot Assist. Nissan has ProPILOT Assist. Hyundai and Kia have Highway Driving Assist. Ford offers BlueCruise, General Motors offers Super Cruise, and Mercedes-Benz sells something called DRIVE PILOT.
 
 Those names sound as if they belong on a neat ladder—from ordinary cruise control at the bottom to a car that drives itself at the top. They do not.
