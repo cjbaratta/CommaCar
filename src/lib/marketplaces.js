@@ -79,7 +79,7 @@ function truecarQueryString(params) {
 
 function hybridBaseModel(vehicle) {
   return vehicle.isHybrid
-    ? vehicle.marketplaceModel.replace(/\b(?:plug in|plug-in|phev|hybrid)\b$/i, "").replace(/\s+/g, " ").trim()
+    ? vehicle.marketplaceModel.replace(/\b(?:plug[- ]in(?: hybrid)?|phev|hybrid)\b$/i, "").replace(/\s+/g, " ").trim()
     : vehicle.marketplaceModel;
 }
 

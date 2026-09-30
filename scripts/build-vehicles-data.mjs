@@ -64,8 +64,8 @@ for (const [, , makeHtml, body] of makeSections) {
     if (!model || !yearsRaw) continue;
 
     const capability = text(row.match(/<div class="car-detail-tier[^"]*">([\s\S]*?)<\/div>/)?.[1] ?? "");
-    const requirementMatch = row.match(/<hgroup><span>Support<\/span>\s*<div>([\s\S]*?)<\/div><\/hgroup>/);
-    const noteMatch = row.match(/<hgroup><span>Note<\/span>\s*<div>([\s\S]*?)<\/div><\/hgroup>/);
+    const requirementMatch = row.match(/<hgroup><span[^>]*>Support<\/span>\s*<div>([\s\S]*?)<\/div><\/hgroup>/);
+    const noteMatch = row.match(/<hgroup><span[^>]*>Note<\/span>\s*<div>([\s\S]*?)<\/div><\/hgroup>/);
     const harness = text(row.match(/<strong>car harness:\s*([\s\S]*?)<\/strong>/)?.[1] ?? "See comma store");
     const shopPath = decode(row.match(/<a href="([^"]*\/shop\/comma-four[^"]*)"/)?.[1] ?? "/shop/comma-four");
     const years = expandYears(yearsRaw);

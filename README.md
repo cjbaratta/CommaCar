@@ -26,4 +26,4 @@ After deploying a production build:
 2. Confirm the sitemap is reachable at `https://www.pilotcompatible.com/sitemap.xml`.
 3. Run `npm run indexnow:submit` to submit every URL from `public/sitemap.xml`.
 
-Compatibility data comes from `https://comma.ai/vehicles`; the checked-in data was generated on July 30, 2026 from a source page last updated July 15, 2026.
+Compatibility data comes from `https://comma.ai/vehicles`; the baseline data was generated on July 30, 2026. US-market additions were verified on September 29, 2026 against the chart last updated September 24, 2026; existing entries were preserved.

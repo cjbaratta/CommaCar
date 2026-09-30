@@ -6,6 +6,7 @@ const bodyStyleRules = [
   {
     style: "SUV / crossover / van",
     tokens: [
+      "adx",
       "ascent",
       "atlas",
       "blazer",
@@ -29,6 +30,8 @@ const bodyStyleRules = [
       "gv70",
       "gv80",
       "highlander",
+      "hr-v",
+      "id.4",
       "kona",
       "mdx",
       "murano",
@@ -71,7 +74,7 @@ const bodyStyleRules = [
   },
   {
     style: "Truck",
-    tokens: ["1500", "f-150", "maverick", "silverado", "sierra", "ram"],
+    tokens: ["1500", "f-150", "maverick", "ridgeline", "silverado", "sierra", "ram"],
   },
   {
     style: "Sedan / hatchback",
@@ -111,6 +114,7 @@ const electricTokens = [
   "e-crafter",
   "e-golf",
   "ev6",
+  "id.4",
   "ioniq 5",
   "ioniq 6",
   "ioniq electric",
@@ -202,7 +206,7 @@ function isBatteryElectric(vehicle) {
 function isHybrid(vehicle) {
   if (vehicle.isElectric) return false;
   const model = normalize(vehicle.marketplaceModel);
-  return model.includes("hybrid") || model.includes("prius");
+  return model.includes("hybrid") || model.includes("prius") || (vehicle.make === "Honda" && model === "prelude");
 }
 
 function isUsMarket(vehicle) {
