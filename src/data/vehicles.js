@@ -1,5 +1,5 @@
 // Baseline generated from https://comma.ai/vehicles on 2026-07-30 (source updated July 15, 2026).
-// US-market additions verified on 2026-09-29 (source updated September 24, 2026); existing entries preserved.
+// US-market additions verified on 2026-10-11 (source updated October 6, 2026); existing entries preserved.
 export const commaVehicles = [
   {
     "id": "acura-ilx-2016",
@@ -1337,14 +1337,15 @@ export const commaVehicles = [
       2023,
       2024,
       2025,
-      2026
+      2026,
+      2027
     ],
-    "yearsLabel": "2023, 2024, 2025, 2026",
+    "yearsLabel": "2023, 2024, 2025, 2026, 2027",
     "requirement": "openpilot will work with all packages and trims of this car.",
     "note": "",
     "harness": "Honda Bosch C",
     "capability": "openpilot upgrades your Honda CR-V Hybrid with automated lane centering at all speeds , and adaptive cruise control that automatically resumes from a stop .",
-    "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda CR-V Hybrid 2023-26"
+    "shopUrl": "https://comma.ai/shop/comma-four?harness=Honda CR-V Hybrid 2023-27"
   },
   {
     "id": "honda-e-2020",
