@@ -5,15 +5,19 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.pilotcompatible.com/blog</loc>
+    <loc>https://www.pilotcompatible.com/blog/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.pilotcompatible.com/blog/used-car-buying-checklist-for-openpilot-shoppers</loc>
+    <loc>https://www.pilotcompatible.com/blog/adas-names-autopilot-propilot-hda-explained</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.pilotcompatible.com/blog/the-history-of-comma-hardware-from-eon-to-comma-four</loc>
+    <loc>https://www.pilotcompatible.com/blog/best-budget-openpilot-cars-20000</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pilotcompatible.com/blog/best-evs-under-30000-openpilot-2025</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -21,7 +25,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.pilotcompatible.com/blog/why-your-car-might-not-work-with-openpilot-a-friendly-guide-to-compatibility</loc>
+    <loc>https://www.pilotcompatible.com/blog/cheapest-openpilot-setup</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pilotcompatible.com/blog/commacare-warranty-announced</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -33,11 +41,15 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.pilotcompatible.com/blog/best-evs-under-30000-openpilot-2025</loc>
+    <loc>https://www.pilotcompatible.com/blog/the-history-of-comma-hardware-from-eon-to-comma-four</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.pilotcompatible.com/blog/commacare-warranty-announced</loc>
+    <loc>https://www.pilotcompatible.com/blog/used-car-buying-checklist-for-openpilot-shoppers</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pilotcompatible.com/blog/why-your-car-might-not-work-with-openpilot-a-friendly-guide-to-compatibility</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

@@ -9,7 +9,8 @@ A lightweight static Vite app for finding US-market vehicles with comma.ai openp
 ## Scripts
 
 - `npm run dev` starts the local Vite server.
-- `npm run build` creates the production build.
+- `npm run build` regenerates the sitemap and creates the production build.
+- `npm run build:sitemap` refreshes `public/sitemap.xml` with the home page, canonical blog index, and every post in `posts/`.
 - `npm run indexnow:submit` submits the current sitemap URLs to IndexNow after a production deploy.
 - `npm test` runs the public-readiness regression tests.
 - `npm run lint` checks JavaScript syntax and repository hygiene.
